@@ -47,13 +47,13 @@ const Terms = () => {
     {
       icon: <FileCheck className="w-6 h-6" />,
       title: "Acceptance of Terms",
-      content: "By accessing and using NewsFlow, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.",
+      content: "By accessing and using NewsOn, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.",
       type: "info"
     },
     {
       icon: <CheckCircle className="w-6 h-6" />,
       title: "Use License",
-      content: "Permission is granted to temporarily download one copy of the materials on NewsFlow's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.",
+      content: "Permission is granted to temporarily download one copy of the materials on NewsOn's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.",
       type: "success"
     },
     {
@@ -65,19 +65,19 @@ const Terms = () => {
     {
       icon: <XCircle className="w-6 h-6" />,
       title: "Disclaimer",
-      content: "The materials on NewsFlow's website are provided on an 'as is' basis. NewsFlow makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability.",
+      content: "The materials on NewsOn's website are provided on an 'as is' basis. NewsOn makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability.",
       type: "error"
     },
     {
       icon: <Gavel className="w-6 h-6" />,
       title: "Limitations",
-      content: "In no event shall NewsFlow or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on NewsFlow's website.",
+      content: "In no event shall NewsOn or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on NewsOn's website.",
       type: "info"
     },
     {
       icon: <Scale className="w-6 h-6" />,
       title: "Governing Law",
-      content: "These terms and conditions are governed by and construed in accordance with the laws of the jurisdiction in which NewsFlow operates, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.",
+      content: "These terms and conditions are governed by and construed in accordance with the laws of the jurisdiction in which NewsOn operates, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.",
       type: "info"
     }
   ];
@@ -131,7 +131,7 @@ const Terms = () => {
               {/* Introduction */}
               <div className="prose prose-lg dark:prose-invert max-w-none mb-16 animate-on-scroll">
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Welcome to NewsFlow. These Terms and Conditions ("Terms") govern your access to and use of our website and services. By accessing or using NewsFlow, you agree to be bound by these Terms. If you disagree with any part of these terms, then you may not access the service.
+                  Welcome to NewsOn. These Terms and Conditions ("Terms") govern your access to and use of our website and services. By accessing or using NewsOn, you agree to be bound by these Terms. If you disagree with any part of these terms, then you may not access the service.
                 </p>
               </div>
 
@@ -165,7 +165,7 @@ const Terms = () => {
                 <div className="p-8 rounded-lg border border-border bg-card animate-on-scroll">
                   <h2 className="text-2xl font-display font-bold text-foreground mb-4">Intellectual Property Rights</h2>
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    The service and its original content, features, and functionality are and will remain the exclusive property of NewsFlow and its licensors. The service is protected by copyright, trademark, and other laws. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.
+                    The service and its original content, features, and functionality are and will remain the exclusive property of NewsOn and its licensors. The service is protected by copyright, trademark, and other laws. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.
                   </p>
                 </div>
 
@@ -196,7 +196,7 @@ const Terms = () => {
                     If you have any questions about these Terms and Conditions, please contact us:
                   </p>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>Email: legal@newsflow.com</li>
+                    <li>Email: legal@NewsOn.com</li>
                     <li>Address: 123 News Street, Media City, MC 12345</li>
                     <li>Phone: +1 (555) 123-4567</li>
                   </ul>

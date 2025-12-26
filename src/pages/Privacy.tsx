@@ -112,7 +112,7 @@ const Privacy = () => {
               {/* Introduction */}
               <div className="prose prose-lg dark:prose-invert max-w-none mb-16 animate-on-scroll">
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  At NewsFlow, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.
+                  At NewsOn, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.
                 </p>
               </div>
 
@@ -156,7 +156,7 @@ const Privacy = () => {
                     If you have any questions about this Privacy Policy, please contact us:
                   </p>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>Email: privacy@newsflow.com</li>
+                    <li>Email: privacy@NewsOn.com</li>
                     <li>Address: 123 News Street, Media City, MC 12345</li>
                     <li>Phone: +1 (555) 123-4567</li>
                   </ul>

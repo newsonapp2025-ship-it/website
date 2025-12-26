@@ -61,7 +61,7 @@ const AppPreviewSection = () => {
                 <div className="px-5 py-4 border-b border-border">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-display text-xl font-bold text-foreground">
-                      NewsFlow
+                      NewsOn
                     </h3>
                     <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
                       <span className="text-sm font-semibold text-muted-foreground">

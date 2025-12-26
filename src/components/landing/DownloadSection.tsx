@@ -22,7 +22,7 @@ const DownloadSection = () => {
           </h2>
 
           <p className="text-background/70 text-lg mb-10 max-w-xl mx-auto">
-            Join millions of readers who trust NewsFlow for their daily news.
+            Join millions of readers who trust NewsOn for their daily news.
             Download now and start your free trial today.
           </p>
 

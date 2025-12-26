@@ -5,21 +5,21 @@ const testimonials = [
     name: "Sarah Chen",
     role: "Tech Entrepreneur",
     avatar: "SC",
-    content: "NewsFlow has completely changed how I stay informed. The personalized feed knows exactly what I want to read before I do!",
+    content: "NewsOn has completely changed how I stay informed. The personalized feed knows exactly what I want to read before I do!",
     rating: 5,
   },
   {
     name: "Marcus Johnson",
     role: "Financial Analyst",
     avatar: "MJ",
-    content: "The speed of breaking news alerts is unmatched. I've made critical decisions faster thanks to NewsFlow's real-time updates.",
+    content: "The speed of breaking news alerts is unmatched. I've made critical decisions faster thanks to NewsOn's real-time updates.",
     rating: 5,
   },
   {
     name: "Emily Rodriguez",
     role: "University Professor",
     avatar: "ER",
-    content: "Finally, a news app that prioritizes accuracy. I recommend NewsFlow to all my students for reliable information.",
+    content: "Finally, a news app that prioritizes accuracy. I recommend NewsOn to all my students for reliable information.",
     rating: 5,
   },
 ];
@@ -45,7 +45,7 @@ const TestimonialsSection = () => {
             Loved by Millions Worldwide
           </h2>
           <p className="text-muted-foreground text-lg">
-            See what our readers have to say about their NewsFlow experience.
+            See what our readers have to say about their NewsOn experience.
           </p>
         </div>
 

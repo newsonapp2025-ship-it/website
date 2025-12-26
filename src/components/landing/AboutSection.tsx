@@ -31,7 +31,7 @@ const AboutSection = () => {
               </span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-              Founded in 2020, NewsFlow was born from a simple belief: everyone deserves access to 
+              Founded in 2020, NewsOn was born from a simple belief: everyone deserves access to 
               accurate, unbiased news. We've built a platform that cuts through the noise and 
               delivers what matters most to you.
             </p>
