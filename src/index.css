@@ -106,6 +106,10 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Source Sans 3', sans-serif;
@@ -127,6 +131,15 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 
   /* Animation utilities */
@@ -161,6 +174,65 @@
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  .fade-in-on-scroll {
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-in-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-up-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .slide-up-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-left-on-scroll {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .slide-left-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .slide-right-on-scroll {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .slide-right-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scale-up-on-scroll {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scale-up-on-scroll.animate-in {
+    opacity: 1 !important;
+    transform: scale(1) !important;
   }
 
   .bg-grid-pattern {

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center pt-16 sm:pt-20 md:pt-24 overflow-hidden px-4 sm:px-6">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-secondary via-background to-secondary/50" />
       <div
@@ -13,23 +13,23 @@ const HeroSection = () => {
         }}
       />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
         <div className="max-w-4xl mx-auto text-center">
           {/* Breaking News Badge */}
           <div
-            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-8 opacity-0 animate-fade-up"
+            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-6 sm:mb-8 opacity-0 animate-fade-up"
             style={{ animationDelay: "0.1s" }}
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            <span className="text-sm font-semibold">Breaking News • 24/7 Coverage</span>
+            <span className="text-xs sm:text-sm font-semibold">Breaking News • 24/7 Coverage</span>
           </div>
 
           {/* Main Headline */}
           <h1
-            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 text-balance leading-tight opacity-0 animate-fade-up"
+            className="font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 sm:mb-6 text-balance leading-tight opacity-0 animate-fade-up px-2"
             style={{ animationDelay: "0.2s" }}
           >
             Stay Informed.
@@ -39,7 +39,7 @@ const HeroSection = () => {
 
           {/* Subheadline */}
           <p
-            className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto text-balance leading-relaxed opacity-0 animate-fade-up"
+            className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-2xl mx-auto text-balance leading-relaxed opacity-0 animate-fade-up px-4"
             style={{ animationDelay: "0.3s" }}
           >
             Your personalized gateway to breaking news, in-depth analysis, and stories
@@ -48,47 +48,47 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-up"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 opacity-0 animate-fade-up px-4"
             style={{ animationDelay: "0.4s" }}
           >
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105 group w-full sm:w-auto"
             >
               Download Free
-              <ArrowRight className="ml-2 w-5 h-5" />
+              <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
 
           {/* Stats */}
           <div
-            className="grid grid-cols-3 gap-8 mt-16 max-w-lg mx-auto opacity-0 animate-fade-up"
+            className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-12 sm:mt-16 max-w-lg mx-auto opacity-0 animate-fade-up px-4"
             style={{ animationDelay: "0.5s" }}
           >
             <div className="text-center">
-              <div className="font-display text-3xl md:text-4xl font-bold text-foreground">
+              <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
                 5M+
               </div>
-              <div className="text-sm text-muted-foreground mt-1">Active Readers</div>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1">Active Readers</div>
             </div>
             <div className="text-center">
-              <div className="font-display text-3xl md:text-4xl font-bold text-foreground">
+              <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
                 50K+
               </div>
-              <div className="text-sm text-muted-foreground mt-1">Daily Stories</div>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1">Daily Stories</div>
             </div>
             <div className="text-center">
-              <div className="font-display text-3xl md:text-4xl font-bold text-foreground">
+              <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
                 4.9★
               </div>
-              <div className="text-sm text-muted-foreground mt-1">App Rating</div>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1">App Rating</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden sm:block">
         <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center pt-2">
           <div className="w-1 h-3 bg-muted-foreground/50 rounded-full" />
         </div>
