@@ -1,4 +1,5 @@
 import { Newspaper, Twitter, Instagram, Facebook, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -7,14 +8,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-1">
-            <a href="/" className="flex items-center gap-2 mb-4">
+            <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <Newspaper className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="font-display text-xl font-bold text-foreground">
                 NewsFlow
               </span>
-            </a>
+            </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Your personalized gateway to breaking news and stories that matter.
             </p>
@@ -79,14 +80,14 @@ const Footer = () => {
             <h4 className="font-semibold text-foreground mb-4">Legal</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                <Link to="/privacy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                <Link to="/terms" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
                   Terms of Service
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
