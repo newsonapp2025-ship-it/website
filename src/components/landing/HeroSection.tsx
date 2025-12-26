@@ -1,4 +1,4 @@
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
@@ -57,14 +57,6 @@ const HeroSection = () => {
             >
               Download Free
               <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-border bg-background/50 hover:bg-secondary text-foreground font-semibold px-8 py-6 text-lg rounded-xl"
-            >
-              <Play className="mr-2 w-5 h-5" />
-              Watch Demo
             </Button>
           </div>
 
