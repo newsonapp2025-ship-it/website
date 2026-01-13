@@ -6,6 +6,7 @@ import AudioWave from "./AudioWave";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import { useGetUserDataQuery } from "@/features/api/userapi";
+import newslogo from "../assests/newslogo.png"
 
 const Header = () => {
 
@@ -55,14 +56,16 @@ const Header = () => {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <a href="#" className="flex items-center gap-2 group">
-              <div className="relative">
+              <img src={newslogo} className="h-14 w-28" alt="" />
+
+              {/* <div className="relative">
                 <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
                   <Headphones className="w-5 h-5 text-primary-foreground" />
                 </div>
               </div>
               <span className="text-xl font-bold text-foreground">
                 News<span className="text-gradient">On</span>
-              </span>
+              </span> */}
             </a>
 
             {/* Desktop Navigation */}
