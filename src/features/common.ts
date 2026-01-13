@@ -2,7 +2,7 @@ export const all = {
 
       // for live
 
-      // baseurl: "http://192.168.1.8:8080/api",
+      // baseurl: "http://192.168.1.8:8080/api", 
       baseurl: "https://api.newson.app/api",
       imageurl : "https://news-on.s3.ap-south-1.amazonaws.com/"
       // baseurl2: "https://api.demask.uk/",

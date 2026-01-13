@@ -6,16 +6,30 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${all.baseurl}`,
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token')
+      // HARD-CODED TOKEN (for 5 days)
+      const hardcodedToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2OTIxYjE3Yjc5MTcyM2U3ZTNlZjkzMWYiLCJkYm5hbWUiOiJ1c2VycyIsImlhdCI6MTc2ODI3NzgwMH0.UFv8DnVmeJIqyo2yXdiz6oFNY_k61_VIn8HOItRpjsI";
+
+      // Optionally, you can still prefer localStorage token if it exists
+      const token = localStorage.getItem("token") || hardcodedToken;
+
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
+
+      // ✅ Return headers object
       return headers;
     },
-    //  baseUrl: "http://192.168.136.243:8000/api",
-
   }),
-  tagTypes: ['webinar', 'user', 'auth', 'userbot', 'country', "menuControl", "price", "ticket", "support"],
-
+  tagTypes: [
+    "webinar",
+    "user",
+    "auth",
+    "userbot",
+    "country",
+    "menuControl",
+    "price",
+    "ticket",
+    "support",
+  ],
   endpoints: (builder) => ({}),
 });

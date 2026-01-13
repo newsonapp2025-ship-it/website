@@ -105,6 +105,16 @@ const userApi = api.injectEndpoints({
       providesTags: ["user"],
     }),
 
+    // https://api.newson.app/api/latestnews/getActiveNewsMobile?language=tamil
+        oneNews: builder.query<Admin, string>({
+      query: () => ({
+        url: `/latestnews/getActiveNewsMobile?language=tamil`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+
+
 
     // ✅ Get users with pagination
     getUserData: builder.query<PaginatedUserResponse, PaginationArgs | void>({
@@ -214,6 +224,7 @@ const userApi = api.injectEndpoints({
 export const {
   useSubmitDataMutation,
   useTermsDataQuery,
+  useOneNewsQuery,
   usePrivacyDataQuery,
   useGetNewsbyIdQuery,
   useGetAllCategoriesQuery,

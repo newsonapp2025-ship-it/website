@@ -3,9 +3,15 @@ import { Play, Download, Headphones, Volume2, Pause } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AudioWave from "./AudioWave";
 import { useEffect, useRef, useState } from "react";
-import { useGetNewsbyIdQuery } from "@/features/api/userapi";
-
+import { useGetNewsbyIdQuery, useOneNewsQuery } from "@/features/api/userapi";
+import newsonaudio from "./newsonaudio.mp3";
 const FirstHero = () => {
+
+    const { data: getData } = useOneNewsQuery()
+
+    // console.log(oneNewsdata, "change daraksuper")
+
+    // console.log(oneNewsdata, "think super large like waste")
 
     const [showDownloadPopup, setShowDownloadPopup] = useState(false);
 
@@ -16,7 +22,7 @@ const FirstHero = () => {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
 
-    const { data: getData } = useGetNewsbyIdQuery("691c40dc9f4d6c8006c3bf02");
+    // const { data: getData } = useGetNewsbyIdQuery("691c40dc9f4d6c8006c3bf02");
     const news = getData?.data[0];
 
     console.log(news, "change formate ui large")

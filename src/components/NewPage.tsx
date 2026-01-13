@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Play, Pause, Newspaper } from "lucide-react";
 import { useLocation, useParams } from "react-router-dom";
 import { useGetNewsbyIdQuery } from "@/features/api/userapi";
+import { Button } from "./ui/button";
 
 function FiveNewsPage() {
     const { id, name } = useParams();
@@ -103,7 +104,29 @@ function FiveNewsPage() {
                                         {news.description}
                                     </p>
 
+                                    {/* <Button
+                                        onClick={() => setShowDownloadPopup(true)}
+                                        variant="hero" size="xl" className="group">
+                                        <Download className="w-5 h-5" />
+                                        Download Now
+                                    </Button> */}
                                     <button
+                                        onClick={() => togglePlay(news)}
+                                        className={`
+        flex items-center space-x-2 px-5 py-3 rounded-full
+        bg-red-700 hover:bg-red-600 text-white font-medium
+        text-sm transition-all duration-200 shadow-md
+      `}
+                                    >
+                                        {playingId === news._id ? (
+                                            <Pause className="w-4 h-4" />
+                                        ) : (
+                                            <Play className="w-4 h-4" />
+                                        )}
+                                        <span>{playingId === news._id ? "Pause Audio" : "Play Audio"}</span>
+                                    </button>
+
+                                    {/* <button
                                         onClick={() => togglePlay(news)}
                                         className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 text-black font-medium"
                                     >
@@ -118,7 +141,7 @@ function FiveNewsPage() {
                                                 Play Audio
                                             </>
                                         )}
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         ))}

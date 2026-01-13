@@ -12,19 +12,19 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email Us",
-    detail: "hello@newson.app",
+    detail: "newson2025@gmail.com",
     subtitle: "We'll respond within 24 hours",
   },
   {
     icon: Phone,
     title: "Call Us",
-    detail: "+1 (555) 123-4567",
+    detail: "99442 77553",
     subtitle: "Mon-Fri, 9am-6pm EST",
   },
   {
     icon: MapPin,
     title: "Visit Us",
-    detail: "San Francisco, CA",
+    detail: "513 Shamims Tower 1st Floor Thadagam Main Rd Rs Puram West Coimbatore Coimbatore South Coimbatore - 641002 Tamilnadu - India",
     subtitle: "United States",
   },
 ];
@@ -122,7 +122,7 @@ const ContactSection = () => {
             className="lg:col-span-2 space-y-6"
           >
 
-            <h3 className="text-xl font-bold text-foreground mb-2 mt-5">Our Information</h3>
+            {/* <h3 className="text-xl font-bold text-foreground mb-2 mt-5">Our Information</h3> */}
 
             {contactInfo.map((info, index) => (
               <motion.div
