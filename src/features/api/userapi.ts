@@ -83,6 +83,18 @@ const userApi = api.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+
+        getAllCategories: builder.query<
+      Record<string, number>,
+      void
+    >({
+      query: () => ({
+        url: `/category/getAllCategories`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+
     // ✅ Get users with pagination
     getUserData: builder.query<PaginatedUserResponse, PaginationArgs | void>({
       query: (args) => {
@@ -192,6 +204,7 @@ export const {
   useSubmitDataMutation,
   useTermsDataQuery,
   usePrivacyDataQuery,
+  useGetAllCategoriesQuery,
   useGetUserDataQuery,
   // useCreateUserParticipantMutation,
   useUploadProfileImageMutation,

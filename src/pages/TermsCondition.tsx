@@ -89,7 +89,7 @@ function TermsCondition() {
     const { data: getdata } = useTermsDataQuery()
 
 
-    console.log(getdata?.data?.termsAndCondition, "formate ranger")
+    // console.log(getdata?.data?.termsAndCondition, "formate ranger")
 
 
     const { pathname } = useLocation();
@@ -106,6 +106,16 @@ function TermsCondition() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0f0f1a] to-[#1a0b1f] px-4 py-24">
 
+            <div className="text-center mb-16">
+
+
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Terms & Conditions
+                </h1>
+
+            </div>
+
+
             <div
                 className="text-white  leading-relaxed space-y-2 max-w-4xl  mx-auto"
                 dangerouslySetInnerHTML={{ __html: getdata?.data?.termsAndCondition || "" }}
@@ -114,20 +124,6 @@ function TermsCondition() {
             <div className="max-w-4xl mx-auto">
 
                 {/* Header */}
-                <div className="text-center mb-16">
-                    <span className="inline-block mb-4 px-4 py-1 rounded-full bg-white/10 text-orange-400 text-sm">
-                        Legal
-                    </span>
-
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                        Terms & Conditions
-                    </h1>
-
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Please read these Terms and Conditions carefully before using
-                        the NewsOn application.
-                    </p>
-                </div>
 
 
                 {/* Footer */}

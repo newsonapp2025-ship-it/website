@@ -1,73 +1,90 @@
-import { usePrivacyDataQuery } from "@/features/api/userapi";
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 
-export const privacyPolicyData = [
+
+
+
+// import { useTermsDataQuery } from '@/features/api/userapi';
+import { usePrivacyDataQuery } from '@/features/api/userapi';
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom';
+
+export const PrivacyPolicyPagesData = [
     {
         id: 1,
-        title: "About NewsOn",
+        title: "Acceptance of Terms",
         content:
-            "NewsOn is an AI-powered, audio-first news application that automatically curates, summarizes, and delivers news content for listening and reading. We are committed to protecting your privacy and handling your data responsibly.",
+            "By accessing or using the NewsOn application, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the application.",
     },
     {
         id: 2,
-        title: "Information We Collect",
+        title: "About NewsOn",
         content:
-            "We may collect information such as your name, email address, device details, usage data, IP address, and content preferences to improve your experience.",
+            "NewsOn is an AI-powered, audio-first news application that automatically curates, summarizes, and delivers news content for informational purposes only.",
     },
     {
         id: 3,
-        title: "How We Use Your Information",
+        title: "Use of the Application",
         content:
-            "Your information is used to personalize news content, improve AI-generated summaries, enhance audio playback, analyze performance, and ensure platform security.",
+            "You agree to use NewsOn only for lawful purposes and in a way that does not violate any applicable laws or regulations.",
     },
     {
         id: 4,
-        title: "AI & Automated Content",
+        title: "AI-Generated Content",
         content:
-            "NewsOn uses Artificial Intelligence to automatically gather news from trusted sources, generate summaries, and recommend content. These processes are content-based only and do not involve sensitive profiling.",
+            "NewsOn uses Artificial Intelligence to generate summaries and audio content. While we strive for accuracy, we do not guarantee that all content is complete, accurate, or up to date.",
     },
     {
         id: 5,
-        title: "Cookies & Tracking",
+        title: "No Professional Advice",
         content:
-            "We may use cookies or similar technologies to remember your preferences, analyze traffic, and improve application performance. You can disable cookies through your browser settings.",
+            "The content provided by NewsOn is for general informational purposes only and should not be considered legal, financial, medical, or professional advice.",
     },
     {
         id: 6,
-        title: "Third-Party Services",
+        title: "Intellectual Property",
         content:
-            "We may use trusted third-party services for analytics, hosting, and audio streaming. These services follow strict data protection and confidentiality standards.",
+            "All content, trademarks, logos, and design elements within NewsOn are the intellectual property of NewsOn or its licensors and may not be copied, modified, or redistributed without permission.",
     },
     {
         id: 7,
-        title: "Data Security",
+        title: "Third-Party Links",
         content:
-            "We implement reasonable technical and organizational measures such as encrypted connections and secure servers to protect your information.",
+            "NewsOn may include links to third-party websites or services. We are not responsible for the content, policies, or practices of these third parties.",
     },
     {
         id: 8,
-        title: "Data Retention",
+        title: "User Responsibilities",
         content:
-            "Your data is retained only as long as necessary to provide our services, comply with legal requirements, and improve the application.",
+            "You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.",
     },
     {
         id: 9,
-        title: "Children’s Privacy",
+        title: "Limitation of Liability",
         content:
-            "NewsOn is not intended for children under the age of 13. We do not knowingly collect personal information from children.",
+            "NewsOn shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of the application.",
     },
     {
         id: 10,
-        title: "Policy Updates",
+        title: "Termination",
         content:
-            "We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.",
+            "We reserve the right to suspend or terminate access to NewsOn at any time without notice if these Terms are violated.",
     },
     {
         id: 11,
-        title: "Contact Us",
+        title: "Changes to Terms",
         content:
-            "If you have any questions or concerns regarding this Privacy Policy, you can contact us at support@newson.app.",
+            "We may update these Terms and Conditions from time to time. Continued use of the application after changes indicates acceptance of the updated terms.",
+    },
+    {
+        id: 12,
+        title: "Governing Law",
+        content:
+            "These Terms and Conditions shall be governed by and interpreted in accordance with applicable laws.",
+    },
+    {
+        id: 13,
+        title: "Contact Information",
+        content:
+            "If you have any questions regarding these Terms and Conditions, please contact us at support@newson.app.",
     },
 ];
 
@@ -77,8 +94,7 @@ function PrivacyPolicyPage() {
     const { data: getdata } = usePrivacyDataQuery()
 
 
-    console.log(getdata?.data, "formate ranger")
-
+    // console.log(getdata?.data?.privacyPolicy, "formate ranger")
 
 
     const { pathname } = useLocation();
@@ -91,51 +107,37 @@ function PrivacyPolicyPage() {
         });
     }, [pathname]);
 
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0f0f1a] to-[#1a0b1f] px-4 py-24">
+
+            <div className="text-center mb-16">
+
+
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Privacy Policy
+                </h1>
+
+            </div>
+
+
+            <div
+                className="text-white!important  leading-relaxed space-y-2 max-w-4xl  mx-auto"
+                dangerouslySetInnerHTML={{ __html: getdata?.data?.privacyPolicy || "" }}
+            />
+
             <div className="max-w-4xl mx-auto">
 
                 {/* Header */}
-                <div className="text-center mb-16">
-                    <span className="inline-block mb-4 px-4 py-1 rounded-full bg-white/10 text-orange-400 text-sm">
-                        Legal
-                    </span>
 
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                        Privacy Policy
-                    </h1>
 
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Your privacy matters to us. Learn how NewsOn collects, uses, and
-                        protects your information.
-                    </p>
-                </div>
-
-                {/* Policy Content */}
-                <div className="space-y-8">
-                    {privacyPolicyData.map((item) => (
-                        <div
-                            key={item.id}
-                            className="   backdrop-blur-md"
-                        >
-                            <h2 className="text-xl font-semibold text-white mb-3">
-                                {item.title}
-                            </h2>
-
-                            <p className="text-gray-400 leading-relaxed">
-                                {item.content}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Footer Note */}
+                {/* Footer */}
                 {/* <div className="text-center text-gray-500 text-sm mt-16">
                     © {new Date().getFullYear()} NewsOn. All rights reserved.
                 </div> */}
             </div>
         </div>
-    );
+    )
 }
 
-export default PrivacyPolicyPage;
+export default PrivacyPolicyPage
