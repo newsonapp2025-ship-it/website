@@ -4,7 +4,8 @@ import { useLocation, useParams } from "react-router-dom";
 import { useGetNewsbyIdQuery } from "@/features/api/userapi";
 
 function FiveNewsPage() {
-    const { id } = useParams();
+    const { id, name } = useParams();
+    console.log(id, name, "this changes")
     const { data: getData } = useGetNewsbyIdQuery(id);
 
     console.log(getData, "think super view")
@@ -55,11 +56,11 @@ function FiveNewsPage() {
 
                 {/* HEADER */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-                        Audio News
+                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 capitalize">
+                        {name}
                     </h1>
                     <p className="text-gray-400">
-                        Title audio plays first, followed by full content.
+                        Headline audio first, then the complete news story.
                     </p>
                 </div>
 

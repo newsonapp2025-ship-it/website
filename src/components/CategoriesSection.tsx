@@ -135,7 +135,7 @@ const CategoriesSection = () => {
                   whileHover={{ scale: 1.03 }}
                 >
                   <div
-                    onClick={() => navigate(`/news/${ui.id}`)} // ✅ USING UI ID
+                    onClick={() => navigate(`/news/${ui.id}/${item.categoryName}`)} // ✅ USING UI ID
                     className={`p-6 rounded-2xl bg-gradient-to-br ${ui.color} border ${ui.borderColor} cursor-pointer`}
                   >
                     <span className="text-5xl mb-4 block">{ui.emoji}</span>
