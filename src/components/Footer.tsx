@@ -17,7 +17,7 @@ const Footer = () => {
 
     ],
     Company: [
-      { label: "About Us", href: "#home" },
+      { label: "About Us", href: "#about" },
     ],
 
     Support: [
