@@ -123,9 +123,9 @@ const Footer = () => {
           <p className="text-muted-foreground text-sm">
             © 2026 News On. All rights reserved.
           </p>
-          <p className="text-muted-foreground text-sm">
+          {/* <p className="text-muted-foreground text-sm">
             Designed for hands-free news, anytime, anywhere.
-          </p>
+          </p> */}
         </div>
       </div>
     </footer>

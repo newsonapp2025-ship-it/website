@@ -121,6 +121,9 @@ const ContactSection = () => {
             transition={{ duration: 0.6 }}
             className="lg:col-span-2 space-y-6"
           >
+
+            <h3 className="text-xl font-bold text-foreground mb-2 mt-5">Our Information</h3>
+
             {contactInfo.map((info, index) => (
               <motion.div
                 key={info.title}
@@ -146,7 +149,7 @@ const ContactSection = () => {
             ))}
 
             {/* Social Links */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -169,7 +172,7 @@ const ContactSection = () => {
                   </button>
                 ))}
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
 
           {/* Contact Form */}
@@ -199,24 +202,23 @@ const ContactSection = () => {
                     className="bg-background/50 border-border/50 focus:border-primary/50 h-12"
                   />
                 </div>
-                {/* <div className="space-y-2">
-                  <Label htmlFor="email" className="text-foreground">
-                    Email Address
+                <div className="space-y-2">
+                  <Label htmlFor="subject" className="text-foreground">
+                    Subject
                   </Label>
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="john@example.com"
-                    value={formData.email}
+                    id="subject"
+                    name="subject"
+                    placeholder="How can we help?"
+                    value={formData.subject}
                     onChange={handleChange}
                     required
                     className="bg-background/50 border-border/50 focus:border-primary/50 h-12"
                   />
-                </div> */}
+                </div>
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label htmlFor="subject" className="text-foreground">
                   Subject
                 </Label>
@@ -229,7 +231,7 @@ const ContactSection = () => {
                   required
                   className="bg-background/50 border-border/50 focus:border-primary/50 h-12"
                 />
-              </div>
+              </div> */}
 
               <div className="space-y-2">
                 <Label htmlFor="address" className="text-foreground">
@@ -268,9 +270,9 @@ const ContactSection = () => {
                 <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
 
-              <p className="text-center text-muted-foreground text-sm">
+              {/* <p className="text-center text-muted-foreground text-sm">
                 We typically respond within 24 hours
-              </p>
+              </p> */}
             </form>
           </motion.div>
         </div>
