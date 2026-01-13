@@ -124,7 +124,7 @@ const Footer = () => {
             © 2026 News On. All rights reserved.
           </p>
           <p className="text-muted-foreground text-sm">
-            Made with ❤️ for news lovers everywhere
+            Designed for hands-free news, anytime, anywhere.
           </p>
         </div>
       </div>

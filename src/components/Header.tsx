@@ -112,12 +112,13 @@ const Header = () => {
           {/* Mobile Menu */}
           {isMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
               className="md:hidden py-4 border-t border-border/50"
             >
-              <nav className="flex flex-col gap-4">
+              <nav className="flex flex-col gap-4 text-center">
                 {navItems.map((item) => (
                   <a
                     key={item.label}
@@ -128,12 +129,10 @@ const Header = () => {
                     {item.label}
                   </a>
                 ))}
-                <Button variant="hero" size="lg" className="mt-2">
-                  Download App
-                </Button>
               </nav>
             </motion.div>
           )}
+
         </div>
       </motion.header>
 

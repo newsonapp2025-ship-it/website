@@ -1,149 +1,140 @@
-import React, { useEffect, useState } from "react";
-import { Play, Pause } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Play, Pause, Newspaper } from "lucide-react";
+import { useLocation, useParams } from "react-router-dom";
+import { useGetNewsbyIdQuery } from "@/features/api/userapi";
 
 function FiveNewsPage() {
-    const [playingId, setPlayingId] = useState(null);
+    const { id } = useParams();
+    const { data: getData } = useGetNewsbyIdQuery(id);
 
+    console.log(getData, "think super view")
 
     const { pathname } = useLocation();
 
+    const audioRef = useRef(null);
+
+    const [playingId, setPlayingId] = useState(null);
+    const [audioStep, setAudioStep] = useState("title"); // "title" | "content"
+
     useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth", // change to "auto" if you want instant
-        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }, [pathname]);
 
-    const togglePlay = (id) => {
-        setPlayingId(playingId === id ? null : id);
+    // 🔁 Handle audio end → switch from title → content
+    const handleAudioEnd = (news) => {
+        if (audioStep === "title") {
+            setAudioStep("content");
+            audioRef.current.src = news.content_audio_url;
+            audioRef.current.play();
+        } else {
+            setPlayingId(null);
+            setAudioStep("title");
+        }
     };
 
+    const togglePlay = (news) => {
+        // If clicking same news
+        if (playingId === news._id) {
+            audioRef.current.pause();
+            setPlayingId(null);
+            setAudioStep("title");
+            return;
+        }
 
-    const newsData = [
-        {
-            id: 1,
-            title: "Breaking: Global Markets Rally",
-            description:
-                "Stock markets around the world saw a major rally today following positive economic signals.",
-            image:
-                "https://images.unsplash.com/photo-1526378722484-bd91ca387e72",
-            audioUrl: "", // API audio URL later
-        },
-        {
-            id: 2,
-            title: "Tech: AI Changing the World",
-            description:
-                "Artificial Intelligence continues to reshape industries from healthcare to finance.",
-            image:
-                "https://images.unsplash.com/photo-1518770660439-4636190af475",
-            audioUrl: "",
-        },
-        {
-            id: 2,
-            title: "Tech: AI Changing the World",
-            description:
-                "Artificial Intelligence continues to reshape industries from healthcare to finance.",
-            image:
-                "https://images.unsplash.com/photo-1518770660439-4636190af475",
-            audioUrl: "",
-        },
-        {
-            id: 2,
-            title: "Tech: AI Changing the World",
-            description:
-                "Artificial Intelligence continues to reshape industries from healthcare to finance.",
-            image:
-                "https://images.unsplash.com/photo-1518770660439-4636190af475",
-            audioUrl: "",
-        },
-        {
-            id: 2,
-            title: "Tech: AI Changing the World",
-            description:
-                "Artificial Intelligence continues to reshape industries from healthcare to finance.",
-            image:
-                "https://images.unsplash.com/photo-1518770660439-4636190af475",
-            audioUrl: "",
-        },
-    ];
+        // If new news clicked
+        setPlayingId(news._id);
+        setAudioStep("title");
 
+        audioRef.current.src = news.title_audio_url;
+        audioRef.current.play();
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0f0f1a] to-[#1a0b1f] px-4 py-28">
             <div className="max-w-5xl mx-auto">
 
-                {/* Header */}
+                {/* HEADER */}
                 <div className="text-center mb-16">
-                    <span className="inline-block mb-4 px-4 py-1 rounded-full bg-white/10 text-orange-400 text-sm">
-                        Audio News Highlights
-                    </span>
-
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                        Latest News,{" "}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">
-                            Simplified for You
-                        </span>
+                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+                        Audio News
                     </h1>
-
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Listen to short, curated news updates designed for multitasking.
+                    <p className="text-gray-400">
+                        Title audio plays first, followed by full content.
                     </p>
                 </div>
 
-                {/* News Cards */}
-                <div className="grid gap-8 md:grid-cols-2">
-                    {newsData.map((news) => (
-                        <div
-                            key={news.id}
-                            className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md hover:scale-[1.02] transition-transform"
-                        >
-                            {/* Image */}
-                            <img
-                                src={news.image}
-                                alt={news.title}
-                                className="w-full h-48 object-cover"
-                            />
+                {/* NEWS GRID */}
 
-                            {/* Content */}
-                            <div className="p-6">
-                                <h3 className="text-xl font-semibold text-white mb-2">
-                                    {news.title}
-                                </h3>
-
-                                <p className="text-gray-400 mb-6">
-                                    {news.description}
-                                </p>
-
-                                {/* Play / Pause */}
-                                <button
-                                    onClick={() => togglePlay(news.id)}
-                                    className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 text-black font-medium hover:opacity-90"
-                                >
-                                    {playingId === news.id ? (
-                                        <>
-                                            <Pause className="w-5 h-5" />
-                                            Pause Audio
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Play className="w-5 h-5" />
-                                            Play Audio
-                                        </>
-                                    )}
-                                </button>
-
-                                {/* 🔊 Audio tag (API ready) */}
-                                {/* 
-                {playingId === news.id && (
-                  <audio src={news.audioUrl} autoPlay />
-                )} 
-                */}
-                            </div>
+                {getData?.data?.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-16 text-center">
+                        <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mb-4">
+                            <Newspaper className="w-8 h-8 text-muted-foreground" />
                         </div>
-                    ))}
-                </div>
+
+                        <h3 className="text-lg font-semibold">
+                            No News Available
+                        </h3>
+
+                        <p className="text-sm text-muted-foreground mt-1">
+                            We couldn’t find any news at the moment. Please check back later.
+                        </p>
+                    </div>
+                ) : (
+
+                    <div className="grid gap-8 md:grid-cols-2"> {
+                        getData?.data?.map((news) => (
+                            <div
+                                key={news._id}
+                                className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden"
+                            >
+                                <img
+                                    src={news.image_url}
+                                    alt={news.title}
+                                    className="w-full h-48 object-cover"
+                                />
+
+                                <div className="p-6">
+                                    <h3 className="text-xl font-semibold text-white mb-2">
+                                        {news.title}
+                                    </h3>
+
+                                    <p className="text-gray-400 mb-6  line-clamp-2">
+                                        {news.description}
+                                    </p>
+
+                                    <button
+                                        onClick={() => togglePlay(news)}
+                                        className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 text-black font-medium"
+                                    >
+                                        {playingId === news._id ? (
+                                            <>
+                                                <Pause className="w-5 h-5" />
+                                                Pause Audio
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Play className="w-5 h-5" />
+                                                Play Audio
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )
+
+                }
+
+
+                {/* 🎧 SINGLE AUDIO ELEMENT */}
+                <audio
+                    ref={audioRef}
+                    onEnded={() => {
+                        const news = getData?.data?.find(n => n._id === playingId);
+                        if (news) handleAudioEnd(news);
+                    }}
+                />
             </div>
         </div>
     );

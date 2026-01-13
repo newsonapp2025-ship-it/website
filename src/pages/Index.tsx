@@ -9,6 +9,8 @@ import Footer from "@/components/Footer";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useTermsDataQuery } from "@/features/api/userapi";
+import AboutUs from "@/components/AboutUs";
+import FirstHero from "@/components/FirstHero";
 
 const Index = () => {
 
@@ -32,8 +34,11 @@ const Index = () => {
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
       {/* <Header /> */}
-      <HeroSection />
+      {/* <HeroSection /> */}
+      <FirstHero />
+
       <FeaturesSection />
+      <AboutUs />
       <CategoriesSection />
       <HowItWorksSection />
       <ContactSection />

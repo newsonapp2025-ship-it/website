@@ -95,6 +95,17 @@ const userApi = api.injectEndpoints({
       providesTags: ["user"],
     }),
 
+
+        // ✅ Get admin
+    getNewsbyId: builder.query<Admin, string>({
+      query: (id) => ({
+        url: `/latestnews/getNewsByCategory/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+
+
     // ✅ Get users with pagination
     getUserData: builder.query<PaginatedUserResponse, PaginationArgs | void>({
       query: (args) => {
@@ -204,6 +215,7 @@ export const {
   useSubmitDataMutation,
   useTermsDataQuery,
   usePrivacyDataQuery,
+  useGetNewsbyIdQuery,
   useGetAllCategoriesQuery,
   useGetUserDataQuery,
   // useCreateUserParticipantMutation,
