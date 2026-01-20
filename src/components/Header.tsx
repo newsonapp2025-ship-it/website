@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Headphones, Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import AudioWave from "./AudioWave";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -10,11 +10,31 @@ import newslogo from "../assests/newslogo.png"
 
 const Header = () => {
 
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+
   const { data: getdata } = useGetUserDataQuery()
 
   console.log(getdata, "think formate line orange")
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigate = useNavigate()
 
@@ -116,6 +136,7 @@ const Header = () => {
           {/* Mobile Menu */}
           {isMenuOpen && (
             <motion.div
+              ref={menuRef}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}

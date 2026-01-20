@@ -9,6 +9,8 @@ const FirstHero = () => {
 
     const { data: getData } = useOneNewsQuery()
 
+    console.log(getData, "change darak super")
+
     // console.log(oneNewsdata, "change daraksuper")
 
     // console.log(oneNewsdata, "think super large like waste")
@@ -23,7 +25,7 @@ const FirstHero = () => {
     const [duration, setDuration] = useState(0);
 
     // const { data: getData } = useGetNewsbyIdQuery("691c40dc9f4d6c8006c3bf02");
-    const news = getData?.data[0];
+    const news = getData?.data;
 
     console.log(news, "change formate ui large")
 

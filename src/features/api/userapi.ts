@@ -17,7 +17,7 @@ export interface User {
   email: string;
   isActive: boolean;
   createdAt: string;
-}
+} 
 
 export interface PaginatedUserResponse {
   data: User[];
@@ -104,11 +104,11 @@ const userApi = api.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
-
+// https://api.newson.app/api/latestnews/getLatestTamilNewsWithAudio
     // https://api.newson.app/api/latestnews/getActiveNewsMobile?language=tamil
         oneNews: builder.query<Admin, string>({
       query: () => ({
-        url: `/latestnews/getActiveNewsMobile?language=tamil`,
+        url: `/latestnews/getLatestTamilNewsWithAudio`,
         method: "GET",
       }),
       providesTags: ["user"],
