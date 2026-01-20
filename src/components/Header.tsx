@@ -146,9 +146,21 @@ const Header = () => {
               <nav className="flex flex-col gap-4 text-center">
                 {navItems.map((item) => (
                   <a
+                    onClick={(e) => {
+
+                      e.preventDefault();
+                      setIsMenuOpen(false)
+
+                      if (location.pathname === "/") {
+                        const element = document.getElementById(item.href.replace("#", ""));
+                        element?.scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        navigate("/" + item.href);
+                      }
+                    }}
                     key={item.label}
                     href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
+
                     className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm font-medium py-2"
                   >
                     {item.label}
