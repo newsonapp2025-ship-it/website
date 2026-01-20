@@ -5,6 +5,7 @@ import AudioWave from "./AudioWave";
 import { useEffect, useRef, useState } from "react";
 import { useGetNewsbyIdQuery, useOneNewsQuery } from "@/features/api/userapi";
 import newsonaudio from "./newsonaudio.mp3";
+import DownloadPopup from "./DownloadPopup";
 const FirstHero = () => {
 
     const { data: getData } = useOneNewsQuery()
@@ -96,17 +97,18 @@ const FirstHero = () => {
     return (
         <>
             <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-                {showDownloadPopup && (
+
+                <DownloadPopup showDownloadPopup={showDownloadPopup} setShowDownloadPopup={setShowDownloadPopup} />
+
+                {/* {showDownloadPopup && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
 
-                        {/* Modal Box */}
                         <motion.div
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ duration: 0.3 }}
                             className="bg-background rounded-2xl p-6 w-[90%] max-w-md border border-border shadow-xl relative"
                         >
-                            {/* Close Button */}
                             <button
                                 onClick={() => setShowDownloadPopup(false)}
                                 className="absolute top-3 right-3 text-muted-foreground hover:text-foreground"
@@ -121,13 +123,13 @@ const FirstHero = () => {
                                 Choose your platform to continue
                             </p>
 
-                            <div className="flex flex-col gap-4">
-                                {/* Play Store */}
+                            <div className="flex justify-center flex-row gap-4">
+
                                 <a
                                     href="https://play.google.com/store"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 transition"
+                                    className="flex items-center justify-center px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 transition"
                                 >
                                     <img
                                         src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
@@ -136,12 +138,12 @@ const FirstHero = () => {
                                     />
                                 </a>
 
-                                {/* App Store */}
+
                                 <a
                                     href="https://www.apple.com/app-store/"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 transition"
+                                    className="flex items-center justify-center px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 transition"
                                 >
                                     <img
                                         src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
@@ -150,9 +152,10 @@ const FirstHero = () => {
                                     />
                                 </a>
                             </div>
+
                         </motion.div>
                     </div>
-                )}
+                )} */}
                 {/* Background Effects */}
                 <div className="absolute inset-0 bg-gradient-radial opacity-50" />
                 <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-glow blur-3xl" />

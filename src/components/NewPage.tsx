@@ -60,9 +60,9 @@ function FiveNewsPage() {
                     <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 capitalize">
                         {name}
                     </h1>
-                    <p className="text-gray-400">
+                    {/* <p className="text-gray-400">
                         Headline audio first, then the complete news story.
-                    </p>
+                    </p> */}
                 </div>
 
                 {/* NEWS GRID */}

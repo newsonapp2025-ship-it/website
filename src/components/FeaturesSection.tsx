@@ -30,7 +30,7 @@ const features = [
   {
     icon: Headphones,
     title: "Hands-Free Listening",
-    description: "Perfect for multitasking while driving, exercising, or cooking.",
+    description: "Perfect for multitasking during exercise or cooking.",
   },
 ];
 
@@ -58,7 +58,7 @@ const FeaturesSection = () => {
             <span className="text-gradient">Stay Informed</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            News On makes news simple, accessible, and convenient by delivering 
+            News On makes news simple, accessible, and convenient by delivering
             important updates in audio format.
           </p>
         </motion.div>

@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { Download, Settings, Headphones, Play } from "lucide-react";
+import { useState } from "react";
+import DownloadPopup from "./DownloadPopup";
 
 const steps = [
   {
@@ -28,7 +30,13 @@ const steps = [
   },
 ];
 
+
+
 const HowItWorksSection = () => {
+
+
+
+  const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   return (
     <section id="how-it-works" className="py-24 md:py-32 relative">
       {/* Background */}
@@ -71,14 +79,16 @@ const HowItWorksSection = () => {
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 className="relative"
               >
+
                 <div className="text-center">
                   {/* Step Number & Icon */}
                   <div className="relative inline-block mb-6">
-                    <div className="w-20 h-20 rounded-2xl bg-card border border-border flex items-center justify-center relative z-10 group hover:border-primary/50 transition-colors duration-300">
+                    <div
+                      onClick={() => index == 0 && setShowDownloadPopup(true)} className={`${index == 0 ? "cursor-pointer" : ""} w-20 h-20 rounded-2xl bg-card border border-border flex items-center justify-center relative z-10 group hover:border-primary/50 transition-colors duration-300`}>
                       <step.icon className="w-8 h-8 text-primary" />
                     </div>
                     <span className="absolute -top-2 -right-2 w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center text-xs font-bold text-primary-foreground shadow-glow">
-                      {step.step}
+                      {/* {step.step} */}
                     </span>
                   </div>
 
@@ -91,7 +101,9 @@ const HowItWorksSection = () => {
           </div>
         </div>
       </div>
-    </section>
+
+      <DownloadPopup showDownloadPopup={showDownloadPopup} setShowDownloadPopup={setShowDownloadPopup} />
+    </section >
   );
 };
 

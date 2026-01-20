@@ -8,7 +8,7 @@ const Footer = () => {
 
 
   const footerLinks = {
-    Product: [
+    Overview: [
       { label: "Home", href: "#home" },
       { label: "Features", href: "#features" },
       { label: "Categories", href: "#categories" },
@@ -56,7 +56,7 @@ const Footer = () => {
               anytime, anywhere — hands-free.
             </p>
             {/* Social Links */}
-            <div className="flex gap-3">
+            {/* <div className="flex gap-3">
               {socialLinks.map((social, i) => (
                 <a
                   key={i}
@@ -66,7 +66,7 @@ const Footer = () => {
                   <social.icon className="w-5 h-5 text-muted-foreground" />
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Links */}

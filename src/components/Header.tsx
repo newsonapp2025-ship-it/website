@@ -7,6 +7,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import { useGetUserDataQuery } from "@/features/api/userapi";
 import newslogo from "../assests/newslogo.png"
+import DownloadPopup from "./DownloadPopup";
 
 const Header = () => {
 
@@ -61,6 +62,9 @@ const Header = () => {
     { label: "How It Works", href: "#how-it-works" },
     { label: "Contact", href: "#contact" },
   ];
+
+
+  const [showDownloadPopup, setShowDownloadPopup] = useState(false);
 
   return (
     <>
@@ -117,10 +121,11 @@ const Header = () => {
             </nav>
 
             {/* CTA Button */}
+
             <div className="hidden md:flex items-center gap-4">
               <AudioWave size="sm" barCount={4} />
-              <Button variant="hero" size="default">
-                Download App
+              <Button onClick={() => setShowDownloadPopup(true)} variant="hero" size="default">
+                Download Apps
               </Button>
             </div>
 
@@ -174,6 +179,9 @@ const Header = () => {
       </motion.header>
 
       <Outlet />
+
+      <DownloadPopup showDownloadPopup={showDownloadPopup} setShowDownloadPopup={setShowDownloadPopup} />
+
 
       <Footer />
     </>

@@ -25,7 +25,7 @@ const contactInfo = [
     icon: MapPin,
     title: "Visit Us",
     detail: "513 Shamims Tower 1st Floor Thadagam Main Rd Rs Puram West Coimbatore Coimbatore South Coimbatore - 641002 Tamilnadu - India",
-    subtitle: "United States",
+    // subtitle: "United States",
   },
 ];
 

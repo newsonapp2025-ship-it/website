@@ -97,7 +97,17 @@ const CategoriesSection = () => {
   if (isLoading || !CATEGORY_UI) return null;
 
   return (
-    <section id="categories" className="py-24 md:py-32 relative overflow-hidden">
+    <section
+      id="categories"
+      className="relative py-24 overflow-hidden bg-background"
+    >
+
+      <div className="absolute inset-0 bg-gradient-subtle" />
+      {/* Background Effects */}
+      {/* <div className="absolute inset-0 bg-gradient-radial opacity-30" />
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-primary/10 blur-3xl rounded-full" />
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/10 blur-3xl rounded-full" /> */}
+
       <div className="container mx-auto px-4 md:px-6 relative z-10">
 
         {/* HEADER */}

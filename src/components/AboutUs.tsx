@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Headphones, Brain, Globe, Zap } from "lucide-react";
+import { Headphones, Brain, Globe, Zap, Rss } from "lucide-react";
+
 
 const FEATURES = [
     {
@@ -9,10 +10,10 @@ const FEATURES = [
             "Listen to the latest news without staring at screens. Perfect for multitasking, travel, and daily routines.",
     },
     {
-        icon: Brain,
-        title: "AI-Curated Content",
+        icon: Rss,
+        title: "Live News Updates",
         description:
-            "Our AI selects and summarizes important stories so you hear what truly matters — fast and unbiased.",
+            "Listen to live and real-time news updates from trusted sources as events happen, without delays or summaries.",
     },
     {
         icon: Globe,
