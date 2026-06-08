@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useTermsDataQuery } from "@/features/api/userapi";
 import AboutUs from "@/components/AboutUs";
 import FirstHero from "@/components/FirstHero";
+import NewsFeedSection from "@/components/news/NewsFeedSection";
 
 const Index = () => {
 
@@ -33,8 +34,7 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-background overflow-x-hidden">
-      {/* <Header /> */}
-      {/* <HeroSection /> */}
+      <NewsFeedSection />
       <FirstHero />
 
       <FeaturesSection />

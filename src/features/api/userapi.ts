@@ -1,4 +1,5 @@
 import { api } from "../api";
+import type { WebsiteNewsParams, WebsiteNewsResponse } from "@/types/news";
 
 // types/user.ts
 
@@ -102,6 +103,24 @@ const userApi = api.injectEndpoints({
         url: `/latestnews/getNewsByCategory/${id}`,
         method: "GET",
       }),
+      providesTags: ["user"],
+    }),
+
+    getWebsiteNews: builder.query<WebsiteNewsResponse, WebsiteNewsParams | void>({
+      query: (args) => {
+        const { page = 1, limit = 20, language = "tamil", search = "" } = args || {};
+        const params = new URLSearchParams({
+          page: String(page),
+          limit: String(limit),
+          language,
+        });
+        if (search) params.set("search", search);
+
+        return {
+          url: `/website/news?${params.toString()}`,
+          method: "GET",
+        };
+      },
       providesTags: ["user"],
     }),
 // https://api.newson.app/api/latestnews/getLatestTamilNewsWithAudio
@@ -227,6 +246,8 @@ export const {
   useOneNewsQuery,
   usePrivacyDataQuery,
   useGetNewsbyIdQuery,
+  useGetWebsiteNewsQuery,
+  useLazyGetWebsiteNewsQuery,
   useGetAllCategoriesQuery,
   useGetUserDataQuery,
   // useCreateUserParticipantMutation,
