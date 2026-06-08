@@ -65,7 +65,7 @@ const NewsFeedSection = () => {
       <div className="container mx-auto px-4 md:px-6">
         {/* Top leaderboard ad */}
         <div className="mb-6 rounded-xl border border-white/5 bg-secondary/30 p-3">
-          <AdSense className="min-h-[90px]" />
+          <AdSense className="min-h-[90px]" delay={0} />
         </div>
 
         <div className="flex gap-6 xl:gap-8">
@@ -162,7 +162,7 @@ const NewsFeedSection = () => {
 
                 {/* Mid-feed ad */}
                 <div className="my-8 rounded-xl border border-white/5 bg-secondary/30 p-3">
-                  <AdSense />
+                  <AdSense delay={250} />
                 </div>
 
                 {/* Remaining cards */}
@@ -202,6 +202,7 @@ const NewsFeedSection = () => {
                   format="auto"
                   className="min-h-[280px]"
                   style={{ minHeight: 280, width: 300 }}
+                  delay={500}
                 />
               </div>
               <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent p-5">

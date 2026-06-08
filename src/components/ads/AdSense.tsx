@@ -1,11 +1,6 @@
-import { useEffect, useId, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-
-declare global {
-  interface Window {
-    adsbygoogle?: { push: (config: Record<string, never>) => void } & unknown[];
-  }
-}
+import { pushAdUnit, whenAdSenseReady } from "@/lib/adsense";
 
 export const AD_CLIENT = "ca-pub-6015484156094454";
 export const DEFAULT_AD_SLOT = "7607056101";
@@ -15,26 +10,6 @@ const isLocalDev =
   window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1";
 
-function waitForAdSenseScript(maxWaitMs = 8000): Promise<void> {
-  return new Promise((resolve) => {
-    const start = Date.now();
-
-    const check = () => {
-      if (window.adsbygoogle?.push) {
-        resolve();
-        return;
-      }
-      if (Date.now() - start >= maxWaitMs) {
-        resolve();
-        return;
-      }
-      window.setTimeout(check, 50);
-    };
-
-    check();
-  });
-}
-
 interface AdSenseProps {
   slot?: string;
   format?: "auto" | "rectangle" | "vertical" | "horizontal";
@@ -42,6 +17,8 @@ interface AdSenseProps {
   className?: string;
   style?: React.CSSProperties;
   label?: boolean;
+  /** Stagger multiple units on the same page (ms) */
+  delay?: number;
 }
 
 const AdSense = ({
@@ -51,43 +28,45 @@ const AdSense = ({
   className,
   style,
   label = true,
+  delay = 0,
 }: AdSenseProps) => {
   const insRef = useRef<HTMLModElement>(null);
   const pushed = useRef(false);
-  const instanceId = useId();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ins = insRef.current;
-    if (!ins || pushed.current) return;
+    if (!ins) return;
 
     let cancelled = false;
 
-    const load = async () => {
-      await waitForAdSenseScript();
-      if (cancelled || !insRef.current || pushed.current) return;
+    const tryPush = () => {
+      if (cancelled || pushed.current || !insRef.current) return;
+      if (insRef.current.getAttribute("data-adsbygoogle-status") === "done") return;
 
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        pushed.current = true;
-      } catch (error) {
-        console.warn("[AdSense] push failed:", error);
-      }
+      pushAdUnit();
+      pushed.current = true;
     };
 
-    // Double rAF ensures layout is complete before Google measures the slot
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        void load();
-      });
-    });
+    const start = async () => {
+      await whenAdSenseReady();
+      if (cancelled) return;
+
+      window.setTimeout(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(tryPush);
+        });
+      }, delay);
+    };
+
+    void start();
 
     return () => {
       cancelled = true;
     };
-  }, [slot, instanceId]);
+  }, [slot, delay]);
 
   return (
-    <div className={cn("flex w-full flex-col items-center", className)}>
+    <div className={cn("ad-slot flex w-full flex-col items-center", className)}>
       {label && (
         <span className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/70">
           Advertisement
@@ -95,9 +74,8 @@ const AdSense = ({
       )}
       <ins
         ref={insRef}
-        key={instanceId}
-        className="adsbygoogle block w-full overflow-hidden"
-        style={{ display: "block", minHeight: 90, ...style }}
+        className="adsbygoogle"
+        style={{ display: "block", minHeight: 90, width: "100%", ...style }}
         data-ad-client={AD_CLIENT}
         data-ad-slot={slot}
         data-ad-format={format}
