@@ -76,15 +76,6 @@ html {
     margin-right: auto;
   }
 
-  /* Collapse empty unfilled slots (no black boxes while account is activating) */
-  ins.adsbygoogle[data-ad-status="unfilled"] {
-    display: none !important;
-    min-height: 0 !important;
-  }
-
-  .ad-slot:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
-    display: none;
-  }
 }
 
 @layer utilities {

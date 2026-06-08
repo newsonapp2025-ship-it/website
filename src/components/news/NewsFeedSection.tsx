@@ -63,9 +63,12 @@ const NewsFeedSection = () => {
   return (
     <section id="news" className="relative scroll-mt-24 bg-background py-8 md:py-12">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Top leaderboard ad */}
-        <div className="mb-6 rounded-xl border border-white/5 bg-secondary/30 p-3">
-          <AdSense className="min-h-[90px]" delay={0} />
+        <div className="mb-6 flex justify-center rounded-xl border border-white/5 bg-secondary/30 p-3">
+          <AdSense
+            format="horizontal"
+            className="w-full max-w-[970px]"
+            style={{ minHeight: 90, minWidth: 320 }}
+          />
         </div>
 
         <div className="flex gap-6 xl:gap-8">
@@ -160,11 +163,6 @@ const NewsFeedSection = () => {
                   </div>
                 </div>
 
-                {/* Mid-feed ad */}
-                <div className="my-8 rounded-xl border border-white/5 bg-secondary/30 p-3">
-                  <AdSense delay={250} />
-                </div>
-
                 {/* Remaining cards */}
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {rest.map((article) => (
@@ -197,14 +195,6 @@ const NewsFeedSection = () => {
           {/* Right sidebar — desktop */}
           <aside className="hidden shrink-0 xl:block xl:w-[300px]">
             <div className="sticky top-24 space-y-6">
-              <div className="rounded-xl border border-white/5 bg-secondary/20 p-3">
-                <AdSense
-                  format="auto"
-                  className="min-h-[280px]"
-                  style={{ minHeight: 280, width: 300 }}
-                  delay={500}
-                />
-              </div>
               <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent p-5">
                 <h3 className="text-lg font-bold text-foreground">Listen on NewsOn</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

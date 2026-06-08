@@ -5,33 +5,35 @@ declare global {
   }
 }
 
-/** Wait until the AdSense script in index.html has finished loading. */
+/** Wait until page + AdSense script are fully ready (required for SPAs). */
 export function whenAdSenseReady(): Promise<void> {
   if (typeof window === "undefined") return Promise.resolve();
 
   if (window.__adsenseReady) return window.__adsenseReady;
 
   window.__adsenseReady = new Promise<void>((resolve) => {
-    const script = document.getElementById("adsense-script") as HTMLScriptElement | null;
+    const finish = () => window.setTimeout(resolve, 150);
 
-    const done = () => window.setTimeout(resolve, 50);
+    const scriptLoaded = () => {
+      const script = document.getElementById("adsense-script");
+      return script?.getAttribute("data-loaded") === "true";
+    };
 
-    if (script?.dataset.loaded === "true") {
-      done();
-      return;
-    }
+    const tryFinish = () => {
+      if (document.readyState === "complete" && scriptLoaded()) {
+        finish();
+      }
+    };
 
-    script?.addEventListener("load", () => {
-      script.dataset.loaded = "true";
-      done();
-    }, { once: true });
+    tryFinish();
 
-    // Fallback: after full page load the script is almost always ready
-    if (document.readyState === "complete") {
-      window.setTimeout(resolve, 300);
-    } else {
-      window.addEventListener("load", done, { once: true });
-    }
+    window.addEventListener("load", tryFinish, { once: true });
+
+    const script = document.getElementById("adsense-script");
+    script?.addEventListener("load", tryFinish, { once: true });
+
+    // Safety fallback
+    window.setTimeout(finish, 8000);
   });
 
   return window.__adsenseReady;
