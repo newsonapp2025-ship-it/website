@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { pushAdUnit, whenAdSenseReady } from "@/lib/adsense";
 
 export const AD_CLIENT = "ca-pub-6015484156094454";
+
 export const DEFAULT_AD_SLOT = "7607056101";
 
 const isLocalDev =
