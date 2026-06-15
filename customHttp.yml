@@ -1,15 +1,9 @@
-applications:
-  - appRoot: /
-    customHeaders:
-      - pattern: '/ads.txt'
-        headers:
-          - key: 'Content-Type'
-            value: 'text/plain; charset=utf-8'
-      - pattern: '/app-ads.txt'
-        headers:
-          - key: 'Content-Type'
-            value: 'text/plain; charset=utf-8'
-    redirects:
-      - source: '/<*>'
-        target: '/index.html'
-        status: '404-200'
+customHeaders:
+  - pattern: '/ads.txt'
+    headers:
+      - key: 'Content-Type'
+        value: 'text/plain; charset=utf-8'
+  - pattern: '/app-ads.txt'
+    headers:
+      - key: 'Content-Type'
+        value: 'text/plain; charset=utf-8'

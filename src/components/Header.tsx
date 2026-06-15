@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import AudioWave from "./AudioWave";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
-import { useGetUserDataQuery } from "@/features/api/userapi";
 import newslogo from "../assests/newslogo.png"
 import DownloadPopup from "./DownloadPopup";
 
@@ -31,28 +30,9 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
-
-  const { data: getdata } = useGetUserDataQuery()
-
-  console.log(getdata, "think formate line orange")
-
-
   const navigate = useNavigate()
 
   const location = useLocation()
-
-  console.log(location, "think super waiting")
-
-
-  // const { hash } = useLocation();
-
-  // useEffect(() => {
-  //   if (hash) {
-  //     const id = hash.replace("#", "");
-  //     const element = document.getElementById(id);
-  //     element?.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [hash]);
 
   const navItems = [
     { label: "Home", href: "#home" },
