@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
-import { Headphones, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import AudioWave from "./AudioWave";
+import LanguageSelector from "./LanguageSelector";
+import ThemeToggle from "./ThemeToggle";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import newslogo from "../assests/newslogo.png"
@@ -103,20 +105,27 @@ const Header = () => {
 
             {/* CTA Button */}
 
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-3">
+              <LanguageSelector />
+              <ThemeToggle />
               <AudioWave size="sm" barCount={4} />
               <Button onClick={() => setShowDownloadPopup(true)} variant="hero" size="default">
                 Download Apps
               </Button>
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-foreground"
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            {/* Mobile actions */}
+            <div className="flex md:hidden items-center gap-1">
+              <LanguageSelector />
+              <ThemeToggle />
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 text-foreground"
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
 
           {/* Mobile Menu */}
@@ -152,6 +161,16 @@ const Header = () => {
                     {item.label}
                   </a>
                 ))}
+                <Button
+                  onClick={() => {
+                    setShowDownloadPopup(true);
+                    setIsMenuOpen(false);
+                  }}
+                  variant="hero"
+                  className="mx-auto mt-2"
+                >
+                  Download Apps
+                </Button>
               </nav>
             </motion.div>
           )}

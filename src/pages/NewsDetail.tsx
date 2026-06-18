@@ -3,6 +3,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Clock, ExternalLink, Loader2, Share2 } from "lucide-react";
 import { useGetWebsiteNewsQuery, useLazyGetWebsiteNewsQuery } from "@/features/api/userapi";
 import type { NewsArticle } from "@/types/news";
+import { NEWS_LANGUAGES } from "@/config/languages";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   cacheArticle,
   formatRelativeTime,
@@ -19,6 +21,7 @@ const NewsDetail = () => {
   const { articleId } = useParams<{ articleId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
+  const { language: preferredLanguage } = useLanguage();
 
   const stateArticle = (location.state as { article?: NewsArticle } | null)?.article;
   const cachedArticle = articleId ? getCachedArticle(articleId) : null;
@@ -27,7 +30,7 @@ const NewsDetail = () => {
   const [fetchNews, { isFetching: isSearching }] = useLazyGetWebsiteNewsQuery();
 
   const { data: relatedData } = useGetWebsiteNewsQuery(
-    { page: 1, limit: 8, language: initialArticle?.language || "tamil" },
+    { page: 1, limit: 8, language: initialArticle?.language || preferredLanguage },
     { skip: !initialArticle },
   );
 
@@ -45,20 +48,27 @@ const NewsDetail = () => {
     if (initialArticle || !articleId) return;
 
     const findArticle = async () => {
-      for (let page = 1; page <= 5; page++) {
-        const result = await fetchNews({ page, limit: 20, language: "tamil" }).unwrap();
-        const found = result.data.find((a) => a.article_id === articleId);
-        if (found) {
-          cacheArticle(found);
-          navigate(`/article/${articleId}`, { replace: true, state: { article: found } });
-          return;
+      const searchLanguages = [
+        preferredLanguage,
+        ...NEWS_LANGUAGES.map((lang) => lang.id).filter((id) => id !== preferredLanguage),
+      ];
+
+      for (const lang of searchLanguages) {
+        for (let page = 1; page <= 5; page++) {
+          const result = await fetchNews({ page, limit: 20, language: lang }).unwrap();
+          const found = result.data.find((a) => a.article_id === articleId);
+          if (found) {
+            cacheArticle(found);
+            navigate(`/article/${articleId}`, { replace: true, state: { article: found } });
+            return;
+          }
+          if (page >= result.pagination.totalPages) break;
         }
-        if (page >= result.pagination.totalPages) break;
       }
     };
 
     findArticle();
-  }, [articleId, initialArticle, fetchNews, navigate]);
+  }, [articleId, initialArticle, fetchNews, navigate, preferredLanguage]);
 
   const article = initialArticle;
   const bodyText = stripHtml(article?.content || article?.description || "");
@@ -87,7 +97,7 @@ const NewsDetail = () => {
   return (
     <article className="min-h-screen pb-16 pt-24">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-6 rounded-xl border border-white/5 bg-secondary/30 p-3">
+        <div className="mb-6 rounded-xl border border-border bg-secondary/30 p-3">
           <AdSense className="min-h-[90px]" />
         </div>
 
@@ -103,13 +113,13 @@ const NewsDetail = () => {
                 <ArrowLeft className="mr-1.5 h-4 w-4" />
                 Back to news
               </Button>
-              <Button variant="outline" size="sm" onClick={handleShare} className="border-white/10">
+              <Button variant="outline" size="sm" onClick={handleShare} className="border-border">
                 <Share2 className="mr-1.5 h-3.5 w-3.5" />
                 Share
               </Button>
               {article.link && (
                 <a href={article.link} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" size="sm" className="border-white/10">
+                  <Button variant="outline" size="sm" className="border-border">
                     <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
                     Original source
                   </Button>
@@ -117,7 +127,7 @@ const NewsDetail = () => {
               )}
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-card shadow-card">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
               <NewsImage article={article} className="aspect-[21/9] w-full" iconClassName="w-16 h-16" />
 
               <div className="p-6 md:p-8">
@@ -151,11 +161,11 @@ const NewsDetail = () => {
                   <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{summary}</p>
                 )}
 
-                <div className="my-8 rounded-xl border border-white/5 bg-secondary/20 p-3">
+                <div className="my-8 rounded-xl border border-border bg-secondary/20 p-3">
                   <AdSense label={false} />
                 </div>
 
-                <div className="prose prose-invert max-w-none">
+                <div className="prose dark:prose-invert max-w-none">
                   {bodyText.split("\n").filter(Boolean).map((paragraph, i) => (
                     <p key={i} className="mb-4 text-base leading-8 text-foreground/90">
                       {paragraph}
