@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import AudioWave from "./AudioWave";
 import LanguageSelector from "./LanguageSelector";
 import ThemeToggle from "./ThemeToggle";
+// import AudioWave from "./AudioWave"; — audio UI (future feature)
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import newslogo from "../assests/newslogo.png"
@@ -108,7 +108,7 @@ const Header = () => {
             <div className="hidden md:flex items-center gap-3">
               <LanguageSelector />
               <ThemeToggle />
-              <AudioWave size="sm" barCount={4} />
+              {/* AUDIO_NEWS_ENABLED: <AudioWave size="sm" barCount={4} /> */}
               <Button onClick={() => setShowDownloadPopup(true)} variant="hero" size="default">
                 Download Apps
               </Button>

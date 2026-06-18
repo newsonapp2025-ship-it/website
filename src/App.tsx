@@ -10,7 +10,8 @@ import TermsCondition from "./pages/TermsCondition";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
-import FiveNewsPage from "./components/NewPage";
+// Audio news page — enable when AUDIO_NEWS_ENABLED in src/config/features.ts
+// import FiveNewsPage from "./components/NewPage";
 import NewsDetail from "./pages/NewsDetail";
 
 const queryClient = new QueryClient();
@@ -29,7 +30,7 @@ const App = () => (
             <Route path="/terms" element={<TermsCondition />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/article/:articleId" element={<NewsDetail />} />
-            <Route path="/news/:id/:name" element={<FiveNewsPage />} />
+            {/* AUDIO_NEWS_ENABLED: <Route path="/news/:id/:name" element={<FiveNewsPage />} /> */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Route>

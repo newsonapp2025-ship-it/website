@@ -10,6 +10,7 @@ import LanguageSelector from "@/components/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import AdSense from "@/components/ads/AdSense";
 import NewsCard from "./NewsCard";
+import { AUDIO_NEWS_ENABLED } from "@/config/features";
 
 const NewsFeedSection = () => {
   const navigate = useNavigate();
@@ -176,6 +177,8 @@ const NewsFeedSection = () => {
             )}
           </div>
 
+          {/* AUDIO_NEWS_ENABLED: sidebar — listen / audio promo */}
+          {AUDIO_NEWS_ENABLED && (
           <aside className="hidden shrink-0 xl:block xl:w-[300px]">
             <div className="sticky top-24 space-y-6">
               <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent p-5">
@@ -193,6 +196,7 @@ const NewsFeedSection = () => {
               </div>
             </div>
           </aside>
+          )}
         </div>
       </div>
     </section>

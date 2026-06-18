@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { Volume2, Layers, Clock, Smartphone, Globe, Headphones } from "lucide-react";
+import { Layers, Clock, Smartphone, Globe, Newspaper } from "lucide-react";
+import { AUDIO_NEWS_ENABLED } from "@/config/features";
 
 const features = [
   {
-    icon: Volume2,
-    title: "Audio News",
-    description: "Listen to news instead of reading. Clear, engaging audio for every story.",
+    icon: Newspaper,
+    title: "Curated News Feed",
+    description: "Browse headlines and stories from trusted sources in your preferred language.",
   },
   {
     icon: Layers,
@@ -27,22 +28,15 @@ const features = [
     title: "Latest & Trusted Sources",
     description: "Real-time and reliable information from verified news outlets.",
   },
-  {
-    icon: Headphones,
-    title: "Hands-Free Listening",
-    description: "Perfect for multitasking during exercise or cooking.",
-  },
 ];
 
 const FeaturesSection = () => {
   return (
     <section id="features" className="py-24 md:py-32 relative">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-subtle" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-radial opacity-30" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,12 +52,12 @@ const FeaturesSection = () => {
             <span className="text-gradient">Stay Informed</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            News On makes news simple, accessible, and convenient by delivering
-            important updates in audio format.
+            {AUDIO_NEWS_ENABLED
+              ? "News On makes news simple, accessible, and convenient by delivering important updates in audio format."
+              : "News On brings you the latest headlines and stories from trusted sources — simple, fast, and in your language."}
           </p>
         </motion.div>
 
-        {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {features.map((feature, index) => (
             <motion.div
@@ -75,16 +69,13 @@ const FeaturesSection = () => {
               className="group relative"
             >
               <div className="relative h-full p-8 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-lg hover:shadow-primary/5">
-                {/* Icon */}
                 <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center mb-6 shadow-glow group-hover:scale-110 transition-transform duration-300">
                   <feature.icon className="w-7 h-7 text-primary-foreground" />
                 </div>
 
-                {/* Content */}
                 <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
 
-                {/* Hover Effect */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
               </div>
             </motion.div>

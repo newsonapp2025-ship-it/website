@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { Download, Settings, Headphones, Play } from "lucide-react";
+import { Download, Settings, Newspaper, Play } from "lucide-react";
 import { useState } from "react";
 import DownloadPopup from "./DownloadPopup";
+import { AUDIO_NEWS_ENABLED } from "@/config/features";
 
 const steps = [
   {
@@ -17,10 +18,12 @@ const steps = [
     description: "Select the news categories that matter most to you.",
   },
   {
-    icon: Headphones,
+    icon: Newspaper,
     step: "03",
-    title: "Plug In & Listen",
-    description: "Put on your headphones and enjoy hands-free news updates.",
+    title: AUDIO_NEWS_ENABLED ? "Plug In & Listen" : "Browse & Read",
+    description: AUDIO_NEWS_ENABLED
+      ? "Put on your headphones and enjoy hands-free news updates."
+      : "Explore headlines and full stories in your preferred language.",
   },
   {
     icon: Play,
@@ -30,21 +33,14 @@ const steps = [
   },
 ];
 
-
-
 const HowItWorksSection = () => {
-
-
-
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   return (
     <section id="how-it-works" className="py-24 md:py-32 relative">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-subtle" />
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -60,13 +56,13 @@ const HowItWorksSection = () => {
             <span className="text-gradient">4 Simple Steps</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Start listening to news in minutes. No complicated setup required.
+            {AUDIO_NEWS_ENABLED
+              ? "Start listening to news in minutes. No complicated setup required."
+              : "Start reading the news in minutes. No complicated setup required."}
           </p>
         </motion.div>
 
-        {/* Steps */}
         <div className="relative">
-          {/* Connection Line */}
           <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-border to-transparent -translate-y-1/2" />
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -79,20 +75,16 @@ const HowItWorksSection = () => {
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 className="relative"
               >
-
                 <div className="text-center">
-                  {/* Step Number & Icon */}
                   <div className="relative inline-block mb-6">
                     <div
                       onClick={() => index == 0 && setShowDownloadPopup(true)} className={`${index == 0 ? "cursor-pointer" : ""} w-20 h-20 rounded-2xl bg-card border border-border flex items-center justify-center relative z-10 group hover:border-primary/50 transition-colors duration-300`}>
                       <step.icon className="w-8 h-8 text-primary" />
                     </div>
                     <span className="absolute -top-2 -right-2 w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center text-xs font-bold text-primary-foreground shadow-glow">
-                      {/* {step.step} */}
                     </span>
                   </div>
 
-                  {/* Content */}
                   <h3 className="text-xl font-bold text-foreground mb-2">{step.title}</h3>
                   <p className="text-muted-foreground text-sm">{step.description}</p>
                 </div>

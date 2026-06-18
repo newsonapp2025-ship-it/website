@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
-import { Download, Apple, Smartphone } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import AudioWave from "./AudioWave";
-import { User } from "lucide-react";
+import { Download, User } from "lucide-react";
 import { useState } from "react";
 import DownloadPopup from "./DownloadPopup";
+import { AUDIO_NEWS_ENABLED } from "@/config/features";
+// import AudioWave from "./AudioWave";
 
 const CTASection = () => {
 
@@ -31,10 +30,7 @@ const CTASection = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center"
         >
-          {/* Audio Wave */}
-          <div className="flex justify-center mb-8 h-10">
-            <AudioWave size="lg" barCount={9} />
-          </div>
+          {/* AUDIO_NEWS_ENABLED: <AudioWave size="lg" barCount={9} /> */}
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
             Ready to Transform How You{" "}
@@ -42,8 +38,9 @@ const CTASection = () => {
           </h2>
 
           <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Join over 1 million users who have switched to audio news.
-            Download News On today and never miss a story.
+            {AUDIO_NEWS_ENABLED
+              ? "Join over 1 million users who have switched to audio news. Download News On today and never miss a story."
+              : "Join thousands of readers who stay informed with News On. Download the app today and never miss a story."}
           </p>
 
           <div className="flex justify-center gap-4 mb-12">
