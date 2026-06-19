@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import TermsCondition from "./pages/TermsCondition";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AboutPage from "./pages/AboutPage";
+import EditorialPolicy from "./pages/EditorialPolicy";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 // Audio news page — enable when AUDIO_NEWS_ENABLED in src/config/features.ts
@@ -29,6 +31,8 @@ const App = () => (
             <Route index element={<Index />} />
             <Route path="/terms" element={<TermsCondition />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/editorial-policy" element={<EditorialPolicy />} />
             <Route path="/article/:articleId" element={<NewsDetail />} />
             {/* AUDIO_NEWS_ENABLED: <Route path="/news/:id/:name" element={<FiveNewsPage />} /> */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

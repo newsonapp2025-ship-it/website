@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { Brain, Globe, Zap, Rss, Newspaper } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { AUDIO_NEWS_ENABLED } from "@/config/features";
 
 const FEATURES = [
@@ -110,6 +112,14 @@ const AboutUs = () => {
           <p className="text-muted-foreground mt-2">
             NewsOn helps you stay updated while living your life.
           </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Button variant="outline" asChild className="border-border">
+              <Link to="/about">About NewsOn</Link>
+            </Button>
+            <Button variant="ghost" asChild>
+              <Link to="/editorial-policy">Editorial Policy</Link>
+            </Button>
+          </div>
         </motion.div>
       </div>
     </section>
