@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PolicyPageLayout from "@/components/PolicyPageLayout";
+import StoreBadges from "@/components/StoreBadges";
 import { NEWS_LANGUAGES } from "@/config/languages";
 
 const AboutPage = () => {
@@ -57,6 +58,15 @@ const AboutPage = () => {
           reduce friction between readers and reliable news — whether you prefer scanning
           headlines on the web or using our mobile app on the go.
         </p>
+      </section>
+
+      <section>
+        <h2>Download the App</h2>
+        <p>
+          Get NewsOn on your phone for news on the go — available on Google Play and the
+          Apple App Store.
+        </p>
+        <StoreBadges size="md" className="mt-4" />
       </section>
 
       <section>

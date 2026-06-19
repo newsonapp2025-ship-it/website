@@ -1,6 +1,7 @@
 import { Newspaper } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AUDIO_NEWS_ENABLED } from "@/config/features";
+import StoreBadges from "./StoreBadges";
 
 type FooterLink = {
   label: string;
@@ -64,6 +65,7 @@ const Footer = () => {
                 ? "Stay informed with audio news. Listen to the latest updates anytime, anywhere — hands-free."
                 : "Stay informed with the latest headlines and stories from trusted sources — in your language."}
             </p>
+            <StoreBadges size="sm" className="justify-start" />
           </div>
 
           {Object.entries(footerLinks).map(([title, links]) => (

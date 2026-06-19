@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useGetNewsbyIdQuery, useOneNewsQuery } from "@/features/api/userapi";
 import newsonaudio from "./newsonaudio.mp3";
 import DownloadPopup from "./DownloadPopup";
+import StoreBadges from "./StoreBadges";
 const FirstHero = () => {
 
     const { data: getData } = useOneNewsQuery()
@@ -123,35 +124,7 @@ const FirstHero = () => {
                                 Choose your platform to continue
                             </p>
 
-                            <div className="flex justify-center flex-row gap-4">
-
-                                <a
-                                    href="https://play.google.com/store"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center justify-center px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 transition"
-                                >
-                                    <img
-                                        src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                                        alt="Play Store"
-                                        className="h-10"
-                                    />
-                                </a>
-
-
-                                <a
-                                    href="https://www.apple.com/app-store/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center justify-center px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 transition"
-                                >
-                                    <img
-                                        src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                                        alt="App Store"
-                                        className="h-10"
-                                    />
-                                </a>
-                            </div>
+                            <StoreBadges size="sm" />
 
                         </motion.div>
                     </div>

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Download, User } from "lucide-react";
 import { useState } from "react";
 import DownloadPopup from "./DownloadPopup";
+import StoreBadges from "./StoreBadges";
 import { AUDIO_NEWS_ENABLED } from "@/config/features";
 // import AudioWave from "./AudioWave";
 
@@ -43,35 +44,7 @@ const CTASection = () => {
               : "Join thousands of readers who stay informed with News On. Download the app today and never miss a story."}
           </p>
 
-          <div className="flex justify-center gap-4 mb-12">
-            {/* Play Store */}
-            <a
-              href="https://play.google.com/store"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center cursor-pointer z-50 justify-center px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 transition"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                alt="Play Store"
-                className="h-12"
-              />
-            </a>
-
-            {/* App Store */}
-            <a
-              href="https://www.apple.com/app-store/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center z-50 justify-center px-4 py-3 rounded-xl bg-secondary hover:bg-secondary/80 transition"
-            >
-              <img
-                src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                alt="App Store"
-                className="h-12"
-              />
-            </a>
-          </div>
+          <StoreBadges size="md" className="mb-12" />
 
           {/* Download Buttons */}
           {/* <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
