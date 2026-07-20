@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import NewsOnLogo from "./NewsOnLogo";
 import StoreBadges from "./StoreBadges";
 
 interface DownloadPopupProps {
@@ -30,7 +31,10 @@ function DownloadPopup({ showDownloadPopup, setShowDownloadPopup }: DownloadPopu
             </button>
 
             <div className="absolute inset-0 bg-gradient-radial opacity-50 z-10 rounded-2xl" />
-            <h3 className="text-xl font-bold text-center text-gradient mb-2 relative z-20">
+            <div className="relative z-20 mb-4 flex justify-center">
+              <NewsOnLogo linkToHome={false} imgClassName="h-10 w-auto" />
+            </div>
+            <h3 className="text-xl font-bold text-center text-foreground mb-2 relative z-20">
               Download NewsOn App
             </h3>
             <p className="text-sm text-muted-foreground text-center mb-6 relative z-20">

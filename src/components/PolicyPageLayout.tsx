@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
+import NewsOnLogo from "@/components/NewsOnLogo";
 
 interface PolicyPageLayoutProps {
   title: string;
@@ -24,9 +25,9 @@ const PolicyPageLayout = ({
     <div className="min-h-screen bg-background px-4 pb-16 pt-24 md:pt-28">
       <div className="container mx-auto max-w-3xl">
         <header className="mb-10 border-b border-border pb-8 text-center">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
-            NewsOn
-          </p>
+          <div className="mb-4 flex justify-center">
+            <NewsOnLogo imgClassName="h-10 w-auto" />
+          </div>
           <h1 className="text-3xl font-bold text-foreground md:text-4xl">{title}</h1>
           {subtitle && (
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">{subtitle}</p>

@@ -109,12 +109,12 @@ function PrivacyPolicyPage() {
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-[#0f0f1a] to-[#1a0b1f] px-4 py-24">
+        <div className="min-h-screen bg-background px-4 pb-16 pt-24 md:pt-28">
 
             <div className="text-center mb-16">
 
 
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
                     Privacy Policy
                 </h1>
 
@@ -122,7 +122,7 @@ function PrivacyPolicyPage() {
 
 
             <div
-                className="text-white!important  leading-relaxed space-y-2 max-w-4xl  mx-auto"
+                className="prose prose-neutral dark:prose-invert max-w-none leading-relaxed max-w-4xl mx-auto"
                 dangerouslySetInnerHTML={{ __html: getdata?.data?.privacyPolicy || "" }}
             />
 

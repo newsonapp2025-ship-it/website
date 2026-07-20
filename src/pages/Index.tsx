@@ -35,10 +35,10 @@ const Index = () => {
       <NewsFeedSection />
       {/* <FirstHero /> — audio demo (future feature) */}
 
-      <FeaturesSection />
+      {/* <FeaturesSection />
       <AboutUs />
       <CategoriesSection />
-      <HowItWorksSection />
+      <HowItWorksSection /> */}
       <ContactSection />
       <CTASection />
       {/* <Footer /> */}

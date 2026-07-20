@@ -1,6 +1,6 @@
-import { Newspaper } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AUDIO_NEWS_ENABLED } from "@/config/features";
+import NewsOnLogo from "./NewsOnLogo";
 import StoreBadges from "./StoreBadges";
 
 type FooterLink = {
@@ -52,14 +52,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           <div className="lg:col-span-2">
-            <a href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center">
-                <Newspaper className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold text-foreground">
-                News<span className="text-gradient">On</span>
-              </span>
-            </a>
+            <NewsOnLogo className="mb-4" imgClassName="h-12 w-auto" />
             <p className="text-muted-foreground mb-6 max-w-sm">
               {AUDIO_NEWS_ENABLED
                 ? "Stay informed with audio news. Listen to the latest updates anytime, anywhere — hands-free."

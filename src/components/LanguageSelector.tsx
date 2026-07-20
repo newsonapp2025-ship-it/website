@@ -11,13 +11,44 @@ import {
 import { cn } from "@/lib/utils";
 
 interface LanguageSelectorProps {
-  variant?: "dropdown" | "pills";
+  variant?: "dropdown" | "pills" | "icon";
   className?: string;
 }
 
 const LanguageSelector = ({ variant = "dropdown", className }: LanguageSelectorProps) => {
   const { language, setLanguage } = useLanguage();
   const active = NEWS_LANGUAGES.find((lang) => lang.id === language);
+
+  if (variant === "icon") {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            aria-label="Select language"
+            className={cn(
+              "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-foreground transition hover:bg-secondary",
+              className,
+            )}
+          >
+            <Globe className="h-5 w-5" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="max-h-72 w-44 overflow-y-auto">
+          {NEWS_LANGUAGES.map((lang) => (
+            <DropdownMenuItem
+              key={lang.id}
+              onClick={() => setLanguage(lang.id)}
+              className="cursor-pointer justify-between"
+            >
+              <span>{lang.label}</span>
+              {language === lang.id && <Check className="h-4 w-4 text-primary" />}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  }
 
   if (variant === "pills") {
     return (
