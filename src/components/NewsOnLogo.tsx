@@ -13,7 +13,7 @@ interface NewsOnLogoProps {
 
 const NewsOnLogo = ({
   className,
-  imgClassName = "h-24 w-auto md:h-14",
+  imgClassName = "h-12 w-auto md:h-14",
   linkToHome = true,
 }: NewsOnLogoProps) => {
   const { theme, resolvedTheme } = useTheme();
@@ -29,19 +29,28 @@ const NewsOnLogo = ({
     <img
       src={logoSrc}
       alt="NewsOn"
-      className={cn("object-contain object-left", imgClassName)}
+      className={cn(
+        "origin-left object-contain object-left",
+        imgClassName,
+        // isDark ? "scale-[1.85]" :
+        "scale-[1.5]",
+      )}
     />
   );
 
   if (linkToHome) {
     return (
-      <Link to="/" className={cn("inline-flex shrink-0 items-center", className)} aria-label="NewsOn home">
+      <Link
+        to="/"
+        className={cn("inline-flex shrink-0 items-center overflow-visible", className)}
+        aria-label="NewsOn home"
+      >
         {image}
       </Link>
     );
   }
 
-  return <span className={cn("inline-flex items-center", className)}>{image}</span>;
+  return <span className={cn("inline-flex items-center overflow-visible", className)}>{image}</span>;
 };
 
 export default NewsOnLogo;
