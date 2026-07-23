@@ -7,7 +7,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import LanguageSelector from "./LanguageSelector";
 import ThemeToggle from "./ThemeToggle";
 import NewsOnLogo from "./NewsOnLogo";
@@ -120,19 +120,26 @@ const Header = () => {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="center" className="min-w-[180px]">
-                  {MORE_NAV.map((item) => (
-                    <DropdownMenuItem
-                      key={item.label}
-                      className="cursor-pointer"
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        if (item.page) navigate(item.href);
-                        else scrollToTarget(item.href);
-                      }}
-                    >
-                      {item.label}
-                    </DropdownMenuItem>
-                  ))}
+                  {MORE_NAV.map((item) =>
+                    item.page ? (
+                      <DropdownMenuItem key={item.label} asChild className="cursor-pointer">
+                        <Link to={item.href} onClick={() => setIsMenuOpen(false)}>
+                          {item.label}
+                        </Link>
+                      </DropdownMenuItem>
+                    ) : (
+                      <DropdownMenuItem
+                        key={item.label}
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          scrollToTarget(item.href);
+                        }}
+                      >
+                        {item.label}
+                      </DropdownMenuItem>
+                    ),
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             </nav>
@@ -221,20 +228,30 @@ const Header = () => {
                 <p className="mt-2 mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   More
                 </p>
-                {MORE_NAV.map((item) => (
-                  <button
-                    key={item.label}
-                    type="button"
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      if (item.page) navigate(item.href);
-                      else scrollToTarget(item.href);
-                    }}
-                    className="py-2 text-left text-sm text-foreground hover:text-[#C70000]"
-                  >
-                    {item.label}
-                  </button>
-                ))}
+                {MORE_NAV.map((item) =>
+                  item.page ? (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="py-2 text-left text-sm text-foreground hover:text-[#C70000]"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        scrollToTarget(item.href);
+                      }}
+                      className="py-2 text-left text-sm text-foreground hover:text-[#C70000]"
+                    >
+                      {item.label}
+                    </button>
+                  ),
+                )}
                 <button
                   type="button"
                   onClick={() => {

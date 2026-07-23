@@ -1,5 +1,5 @@
 import { api } from "../api";
-import type { WebsiteNewsParams, WebsiteNewsResponse } from "@/types/news";
+import type { NewsArticle, WebsiteNewsParams, WebsiteNewsResponse } from "@/types/news";
 
 // types/user.ts
 
@@ -120,6 +120,19 @@ const userApi = api.injectEndpoints({
           url: `/website/news?${params.toString()}`,
           method: "GET",
         };
+      },
+      providesTags: ["user"],
+    }),
+
+    /** Public article by id — GET /api/website/news/:id (backend returns { message, data }) */
+    getWebsiteNewsById: builder.query<NewsArticle, string>({
+      query: (id) => ({
+        url: `/website/news/${encodeURIComponent(id)}`,
+        method: "GET",
+      }),
+      transformResponse: (response: { data?: NewsArticle; message?: string }) => {
+        if (response?.data) return response.data;
+        throw new Error(response?.message || "News article not found");
       },
       providesTags: ["user"],
     }),
@@ -248,6 +261,8 @@ export const {
   useGetNewsbyIdQuery,
   useGetWebsiteNewsQuery,
   useLazyGetWebsiteNewsQuery,
+  useGetWebsiteNewsByIdQuery,
+  useLazyGetWebsiteNewsByIdQuery,
   useGetAllCategoriesQuery,
   useGetUserDataQuery,
   // useCreateUserParticipantMutation,

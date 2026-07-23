@@ -9,7 +9,6 @@ export const PRIMARY_NAV = [
 ];
 
 export const MORE_NAV = [
-  { label: "Features", href: "#features" },
   { label: "About", href: "/about", page: true },
   { label: "Editorial Policy", href: "/editorial-policy", page: true },
   { label: "Contact", href: "#contact" },

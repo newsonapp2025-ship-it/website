@@ -19,7 +19,7 @@ const contactInfo = [
     icon: Phone,
     title: "Call Us",
     detail: "99442 77553",
-    subtitle: "Mon-Fri, 9am-6pm EST",
+    subtitle: "Mon–Fri, 9am–6pm IST",
   },
   {
     icon: MapPin,

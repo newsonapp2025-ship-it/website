@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ElementType } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   ChevronRight,
   Clapperboard,
@@ -140,19 +140,20 @@ const TimeStamp = ({ date }: { date: string }) => (
 
 const FeaturedCard = ({
   article,
-  onClick,
+  onNavigate,
   showExcerpt = true,
 }: {
   article: NewsArticle;
-  onClick: (a: NewsArticle) => void;
+  onNavigate: (a: NewsArticle) => void;
   showExcerpt?: boolean;
 }) => {
   const excerpt = getArticleSummary(article, 280);
   return (
-    <button
-      type="button"
-      onClick={() => onClick(article)}
-      className="group w-full text-left"
+    <Link
+      to={`/article/${article.article_id}`}
+      state={{ article }}
+      onClick={() => onNavigate(article)}
+      className="group block w-full text-left"
     >
       <NewsImage
         article={article}
@@ -166,23 +167,24 @@ const FeaturedCard = ({
         <p className={cn(BODY_CLASS, "mt-3 line-clamp-4 text-muted-foreground")}>{excerpt}</p>
       )}
       <TimeStamp date={article.pubDate} />
-    </button>
+    </Link>
   );
 };
 
 const GridCard = ({
   article,
-  onClick,
+  onNavigate,
   compact = false,
 }: {
   article: NewsArticle;
-  onClick: (a: NewsArticle) => void;
+  onNavigate: (a: NewsArticle) => void;
   compact?: boolean;
 }) => (
-  <button
-    type="button"
-    onClick={() => onClick(article)}
-    className="group w-full text-left"
+  <Link
+    to={`/article/${article.article_id}`}
+    state={{ article }}
+    onClick={() => onNavigate(article)}
+    className="group block w-full text-left"
   >
     <NewsImage
       article={article}
@@ -201,15 +203,15 @@ const GridCard = ({
       <span className="line-clamp-2">{article.title}</span>
     </h3>
     <TimeStamp date={article.pubDate} />
-  </button>
+  </Link>
 );
 
 const HeroCarousel = ({
   slides,
-  onClick,
+  onNavigate,
 }: {
   slides: NewsArticle[];
-  onClick: (a: NewsArticle) => void;
+  onNavigate: (a: NewsArticle) => void;
 }) => {
   const [active, setActive] = useState(0);
   const hero = slides[active] ?? slides[0];
@@ -227,40 +229,40 @@ const HeroCarousel = ({
 
   return (
     <div className="mb-10 grid gap-4 lg:grid-cols-12 lg:gap-5">
-      <button
-        type="button"
-        onClick={() => onClick(hero)}
-        className="group relative col-span-12 overflow-hidden rounded-xl lg:col-span-8"
-      >
-        <NewsImage
-          article={hero}
-          className="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
-          iconClassName="h-16 w-16"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
-          <span className="inline-block rounded bg-[#C61418] px-3 py-1 text-xs font-semibold uppercase text-white">
-            {category}
-          </span>
-          <h2 className="mt-3 text-xl font-bold leading-snug text-white md:text-2xl lg:text-[26px] line-clamp-3">
-            {hero.title}
-          </h2>
-          <span className="mt-2 flex items-center gap-1.5 text-sm text-white/80">
-            <Clock className="h-3.5 w-3.5" />
-            {formatFigmaTime(hero.pubDate)}
-          </span>
-        </div>
+      <div className="relative col-span-12 overflow-hidden rounded-xl lg:col-span-8">
+        <Link
+          to={`/article/${hero.article_id}`}
+          state={{ article: hero }}
+          onClick={() => onNavigate(hero)}
+          className="group relative block"
+        >
+          <NewsImage
+            article={hero}
+            className="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+            iconClassName="h-16 w-16"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
+            <span className="inline-block rounded bg-[#C61418] px-3 py-1 text-xs font-semibold uppercase text-white">
+              {category}
+            </span>
+            <h2 className="mt-3 text-xl font-bold leading-snug text-white md:text-2xl lg:text-[26px] line-clamp-3">
+              {hero.title}
+            </h2>
+            <span className="mt-2 flex items-center gap-1.5 text-sm text-white/80">
+              <Clock className="h-3.5 w-3.5" />
+              {formatFigmaTime(hero.pubDate)}
+            </span>
+          </div>
+        </Link>
         {slides.length > 1 && (
-          <div className="absolute bottom-5 right-5 flex gap-1.5 md:bottom-7 md:right-7">
+          <div className="absolute bottom-5 right-5 z-10 flex gap-1.5 md:bottom-7 md:right-7">
             {slides.slice(0, 5).map((_, i) => (
               <button
                 key={i}
                 type="button"
                 aria-label={`Slide ${i + 1}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActive(i);
-                }}
+                onClick={() => setActive(i)}
                 className={cn(
                   "h-1.5 rounded-full transition-all",
                   i === active ? "w-6 bg-[#C61418]" : "w-1.5 bg-white/70",
@@ -269,16 +271,17 @@ const HeroCarousel = ({
             ))}
           </div>
         )}
-      </button>
+      </div>
 
       <div className="col-span-12 flex flex-col gap-4 lg:col-span-4">
         {side.map((article) => {
           const cat = article.categoryNames?.find((c) => c !== "top") ?? "News";
           return (
-            <button
+            <Link
               key={article.article_id}
-              type="button"
-              onClick={() => onClick(article)}
+              to={`/article/${article.article_id}`}
+              state={{ article }}
+              onClick={() => onNavigate(article)}
               className="group relative flex-1 overflow-hidden rounded-xl"
             >
               <NewsImage
@@ -296,7 +299,7 @@ const HeroCarousel = ({
               <span className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow">
                 <ChevronRight className="h-4 w-4" />
               </span>
-            </button>
+            </Link>
           );
         })}
       </div>
@@ -306,10 +309,10 @@ const HeroCarousel = ({
 
 const LatestUpdatesSidebar = ({
   articles,
-  onClick,
+  onNavigate,
 }: {
   articles: NewsArticle[];
-  onClick: (a: NewsArticle) => void;
+  onNavigate: (a: NewsArticle) => void;
 }) => (
   <aside className="w-full shrink-0 lg:w-[280px] xl:w-[300px]">
     <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
@@ -323,9 +326,10 @@ const LatestUpdatesSidebar = ({
       <ul className="divide-y divide-border p-2">
         {articles.map((article) => (
           <li key={article.article_id}>
-            <button
-              type="button"
-              onClick={() => onClick(article)}
+            <Link
+              to={`/article/${article.article_id}`}
+              state={{ article }}
+              onClick={() => onNavigate(article)}
               className="flex w-full gap-3 rounded-lg p-2 text-left hover:bg-secondary/60"
             >
               <NewsImage
@@ -340,7 +344,7 @@ const LatestUpdatesSidebar = ({
                   {formatFigmaTime(article.pubDate)}
                 </span>
               </div>
-            </button>
+            </Link>
           </li>
         ))}
       </ul>
@@ -353,10 +357,10 @@ const LatestUpdatesSidebar = ({
 
 const TrendingSidebar = ({
   articles,
-  onClick,
+  onNavigate,
 }: {
   articles: NewsArticle[];
-  onClick: (a: NewsArticle) => void;
+  onNavigate: (a: NewsArticle) => void;
 }) => (
   <aside className="w-full shrink-0 lg:w-[280px] xl:w-[300px]">
     <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
@@ -372,9 +376,10 @@ const TrendingSidebar = ({
           const cat = article.categoryNames?.find((c) => c !== "top") ?? "News";
           return (
             <li key={article.article_id}>
-              <button
-                type="button"
-                onClick={() => onClick(article)}
+              <Link
+                to={`/article/${article.article_id}`}
+                state={{ article }}
+                onClick={() => onNavigate(article)}
                 className="flex w-full items-start gap-3 border-b border-border py-3 text-left last:border-0 hover:opacity-90"
               >
                 <span
@@ -387,7 +392,7 @@ const TrendingSidebar = ({
                   <p className="line-clamp-2 text-sm font-bold text-foreground">{article.title}</p>
                   <span className="mt-0.5 text-xs capitalize text-muted-foreground">{cat}</span>
                 </div>
-              </button>
+              </Link>
             </li>
           );
         })}
@@ -464,12 +469,12 @@ const PoliticsSportsSection = ({
   section,
   articles,
   sidebarArticles,
-  onClick,
+  onNavigate,
 }: {
   section: FeedSectionConfig;
   articles: NewsArticle[];
   sidebarArticles: NewsArticle[];
-  onClick: (a: NewsArticle) => void;
+  onNavigate: (a: NewsArticle) => void;
 }) => {
   const [featured, ...rest] = articles;
   const grid = rest.slice(0, 4);
@@ -481,19 +486,19 @@ const PoliticsSportsSection = ({
       <div className="flex flex-col gap-8 xl:flex-row">
         <div className="grid min-w-0 flex-1 gap-6 lg:grid-cols-2">
           <div className="lg:col-span-1">
-            <FeaturedCard article={featured} onClick={onClick} />
+            <FeaturedCard article={featured} onNavigate={onNavigate} />
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             {grid.map((article) => (
-              <GridCard key={article.article_id} article={article} onClick={onClick} />
+              <GridCard key={article.article_id} article={article} onNavigate={onNavigate} />
             ))}
           </div>
         </div>
         {section.sidebar === "latest" && (
-          <LatestUpdatesSidebar articles={sidebarArticles} onClick={onClick} />
+          <LatestUpdatesSidebar articles={sidebarArticles} onNavigate={onNavigate} />
         )}
         {section.sidebar === "trending" && (
-          <TrendingSidebar articles={sidebarArticles} onClick={onClick} />
+          <TrendingSidebar articles={sidebarArticles} onNavigate={onNavigate} />
         )}
       </div>
     </section>
@@ -503,12 +508,12 @@ const PoliticsSportsSection = ({
 const MoviesMotivationSection = ({
   section,
   articles,
-  onClick,
+  onNavigate,
   showNewsletter,
 }: {
   section: FeedSectionConfig;
   articles: NewsArticle[];
-  onClick: (a: NewsArticle) => void;
+  onNavigate: (a: NewsArticle) => void;
   showNewsletter?: boolean;
 }) => {
   const [featured, ...rest] = articles;
@@ -520,11 +525,11 @@ const MoviesMotivationSection = ({
       <CategoryRibbon label={section.label} icon={section.icon} />
       <div className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <FeaturedCard article={featured} onClick={onClick} />
+          <FeaturedCard article={featured} onNavigate={onNavigate} />
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-3">
           {grid.map((article) => (
-            <GridCard key={article.article_id} article={article} onClick={onClick} compact />
+            <GridCard key={article.article_id} article={article} onNavigate={onNavigate} compact />
           ))}
         </div>
       </div>
@@ -536,7 +541,6 @@ const MoviesMotivationSection = ({
 /* ─── Main feed ─── */
 
 const NewsFeedSection = () => {
-  const navigate = useNavigate();
   const { language } = useLanguage();
   const { debouncedSearch, activeCategory } = useNewsBrowse();
   const [page, setPage] = useState(1);
@@ -564,13 +568,9 @@ const NewsFeedSection = () => {
     });
   }, [data, page]);
 
-  const openArticle = useCallback(
-    (article: NewsArticle) => {
-      cacheArticle(article);
-      navigate(`/article/${article.article_id}`, { state: { article } });
-    },
-    [navigate],
-  );
+  const onNavigateArticle = useCallback((article: NewsArticle) => {
+    cacheArticle(article);
+  }, []);
 
   const { heroSlides, sectionData } = useMemo(() => {
     const politics = articles.filter((a) => articleMatchesCategory(a, ["politics"]));
@@ -648,7 +648,7 @@ const NewsFeedSection = () => {
         ) : (
           <>
             {(activeCategory === "all" || activeCategory === "politics") && (
-              <HeroCarousel slides={heroSlides} onClick={openArticle} />
+              <HeroCarousel slides={heroSlides} onNavigate={onNavigateArticle} />
             )}
 
             {visibleSections.map(({ section, articles: sectionArticles, sidebarArticles }, index) => (
@@ -658,13 +658,13 @@ const NewsFeedSection = () => {
                     section={section}
                     articles={sectionArticles}
                     sidebarArticles={sidebarArticles}
-                    onClick={openArticle}
+                    onNavigate={onNavigateArticle}
                   />
                 ) : (
                   <MoviesMotivationSection
                     section={section}
                     articles={sectionArticles}
-                    onClick={openArticle}
+                    onNavigate={onNavigateArticle}
                     showNewsletter={section.layout === "motivation"}
                   />
                 )}

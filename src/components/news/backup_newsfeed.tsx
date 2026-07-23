@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronRight, Loader2, Newspaper, RefreshCw } from "lucide-react";
 import { useGetWebsiteNewsQuery } from "@/features/api/userapi";
@@ -13,7 +12,6 @@ import NewsCard from "./NewsCard";
 import { AUDIO_NEWS_ENABLED } from "@/config/features";
 
 const NewsFeedSection = () => {
-    const navigate = useNavigate();
     const { language } = useLanguage();
     const [page, setPage] = useState(1);
     const [articles, setArticles] = useState<NewsArticle[]>([]);
@@ -43,13 +41,9 @@ const NewsFeedSection = () => {
 
     const handleLoadMore = () => setPage((p) => p + 1);
 
-    const openArticle = useCallback(
-        (article: NewsArticle) => {
-            cacheArticle(article);
-            navigate(`/article/${article.article_id}`, { state: { article } });
-        },
-        [navigate],
-    );
+    const openArticle = useCallback((article: NewsArticle) => {
+        cacheArticle(article);
+    }, []);
 
     const featured = articles[0];
     const secondary = articles.slice(1, 4);
@@ -133,7 +127,7 @@ const NewsFeedSection = () => {
                                             <NewsCard
                                                 article={featured}
                                                 variant="featured"
-                                                onClick={openArticle}
+                                                onNavigate={openArticle}
                                             />
                                         </div>
                                     )}
@@ -143,7 +137,7 @@ const NewsFeedSection = () => {
                                                 key={article.article_id}
                                                 article={article}
                                                 variant="horizontal"
-                                                onClick={openArticle}
+                                                onNavigate={openArticle}
                                             />
                                         ))}
                                     </div>
@@ -151,7 +145,7 @@ const NewsFeedSection = () => {
 
                                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                     {rest.map((article) => (
-                                        <NewsCard key={article.article_id} article={article} onClick={openArticle} />
+                                        <NewsCard key={article.article_id} article={article} onNavigate={openArticle} />
                                     ))}
                                 </div>
 

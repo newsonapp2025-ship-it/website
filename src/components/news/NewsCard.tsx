@@ -1,18 +1,20 @@
+import { Link } from "react-router-dom";
 import { Clock } from "lucide-react";
 import type { NewsArticle } from "@/types/news";
-import { formatRelativeTime, getArticleSummary } from "@/lib/news";
+import { cacheArticle, formatRelativeTime, getArticleSummary } from "@/lib/news";
 import NewsImage from "./NewsImage";
 import { cn } from "@/lib/utils";
 
 interface NewsCardProps {
   article: NewsArticle;
   variant?: "featured" | "compact" | "horizontal";
-  onClick: (article: NewsArticle) => void;
+  /** Optional side effect before navigation (defaults to cacheArticle) */
+  onNavigate?: (article: NewsArticle) => void;
   className?: string;
 }
 
 const SourceMeta = ({ article }: { article: NewsArticle }) => (
-  <div className="flex items-center gap-2 min-w-0">
+  <div className="flex min-w-0 items-center gap-2">
     {article.source_icon ? (
       <img
         src={article.source_icon}
@@ -35,16 +37,27 @@ const SourceMeta = ({ article }: { article: NewsArticle }) => (
   </div>
 );
 
-const NewsCard = ({ article, variant = "compact", onClick, className }: NewsCardProps) => {
+const NewsCard = ({
+  article,
+  variant = "compact",
+  onNavigate,
+  className,
+}: NewsCardProps) => {
   const summary = getArticleSummary(article, variant === "featured" ? 220 : 120);
+
+  const handleNavigate = () => {
+    if (onNavigate) onNavigate(article);
+    else cacheArticle(article);
+  };
 
   if (variant === "featured") {
     return (
-      <button
-        type="button"
-        onClick={() => onClick(article)}
+      <Link
+        to={`/article/${article.article_id}`}
+        state={{ article }}
+        onClick={handleNavigate}
         className={cn(
-          "group relative w-full overflow-hidden rounded-2xl border border-white/10 bg-card text-left shadow-card transition-all duration-300 hover:border-primary/30 hover:shadow-glow",
+          "group relative block w-full overflow-hidden rounded-2xl border border-white/10 bg-card text-left shadow-card transition-all duration-300 hover:border-primary/30 hover:shadow-glow",
           className,
         )}
       >
@@ -57,7 +70,7 @@ const NewsCard = ({ article, variant = "compact", onClick, className }: NewsCard
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
             <SourceMeta article={article} />
-            <h3 className="mt-3 text-xl font-bold leading-snug text-white md:text-2xl line-clamp-3">
+            <h3 className="mt-3 line-clamp-3 text-xl font-bold leading-snug text-white md:text-2xl">
               {article.title}
             </h3>
             {summary && (
@@ -67,15 +80,16 @@ const NewsCard = ({ article, variant = "compact", onClick, className }: NewsCard
             )}
           </div>
         </div>
-      </button>
+      </Link>
     );
   }
 
   if (variant === "horizontal") {
     return (
-      <button
-        type="button"
-        onClick={() => onClick(article)}
+      <Link
+        to={`/article/${article.article_id}`}
+        state={{ article }}
+        onClick={handleNavigate}
         className={cn(
           "group flex w-full gap-4 overflow-hidden rounded-xl border border-white/10 bg-card/80 p-3 text-left transition-all duration-300 hover:border-primary/25 hover:bg-card",
           className,
@@ -87,21 +101,22 @@ const NewsCard = ({ article, variant = "compact", onClick, className }: NewsCard
           iconClassName="w-8 h-8"
         />
         <div className="flex min-w-0 flex-1 flex-col justify-center">
-          <h3 className="text-sm font-semibold leading-snug text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
             {article.title}
           </h3>
           <div className="mt-2">
             <SourceMeta article={article} />
           </div>
         </div>
-      </button>
+      </Link>
     );
   }
 
   return (
-    <button
-      type="button"
-      onClick={() => onClick(article)}
+    <Link
+      to={`/article/${article.article_id}`}
+      state={{ article }}
+      onClick={handleNavigate}
       className={cn(
         "group flex w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-card/80 text-left transition-all duration-300 hover:border-primary/25 hover:bg-card hover:shadow-card",
         className,
@@ -113,14 +128,14 @@ const NewsCard = ({ article, variant = "compact", onClick, className }: NewsCard
         iconClassName="w-10 h-10"
       />
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-sm font-semibold leading-snug text-foreground line-clamp-3 group-hover:text-primary transition-colors">
+        <h3 className="line-clamp-3 text-sm font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
           {article.title}
         </h3>
         <div className="mt-auto pt-3">
           <SourceMeta article={article} />
         </div>
       </div>
-    </button>
+    </Link>
   );
 };
 

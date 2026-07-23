@@ -1,7 +1,11 @@
-import { useEffect, useMemo } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Clock, ExternalLink, Loader2, Share2 } from "lucide-react";
-import { useGetWebsiteNewsQuery, useLazyGetWebsiteNewsQuery } from "@/features/api/userapi";
+import {
+  useGetWebsiteNewsQuery,
+  useLazyGetWebsiteNewsByIdQuery,
+  useLazyGetWebsiteNewsQuery,
+} from "@/features/api/userapi";
 import type { NewsArticle } from "@/types/news";
 import { NEWS_LANGUAGES } from "@/config/languages";
 import { useLanguage } from "@/context/LanguageContext";
@@ -17,6 +21,8 @@ import AdSense from "@/components/ads/AdSense";
 import NewsCard from "@/components/news/NewsCard";
 import NewsImage from "@/components/news/NewsImage";
 
+type LoadStatus = "loading" | "ready" | "not_found" | "error";
+
 const NewsDetail = () => {
   const { articleId } = useParams<{ articleId: string }>();
   const location = useLocation();
@@ -24,14 +30,17 @@ const NewsDetail = () => {
   const { language: preferredLanguage } = useLanguage();
 
   const stateArticle = (location.state as { article?: NewsArticle } | null)?.article;
-  const cachedArticle = articleId ? getCachedArticle(articleId) : null;
-  const initialArticle = stateArticle || cachedArticle;
 
-  const [fetchNews, { isFetching: isSearching }] = useLazyGetWebsiteNewsQuery();
+  const [article, setArticle] = useState<NewsArticle | null>(null);
+  const [loadStatus, setLoadStatus] = useState<LoadStatus>("loading");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const [fetchNewsById] = useLazyGetWebsiteNewsByIdQuery();
+  const [fetchNews] = useLazyGetWebsiteNewsQuery();
 
   const { data: relatedData } = useGetWebsiteNewsQuery(
-    { page: 1, limit: 8, language: initialArticle?.language || preferredLanguage },
-    { skip: !initialArticle },
+    { page: 1, limit: 8, language: article?.language || preferredLanguage },
+    { skip: !article },
   );
 
   const related = useMemo(
@@ -45,32 +54,93 @@ const NewsDetail = () => {
   }, [articleId]);
 
   useEffect(() => {
-    if (initialArticle || !articleId) return;
+    if (!articleId) {
+      setArticle(null);
+      setLoadStatus("not_found");
+      return;
+    }
 
-    const findArticle = async () => {
-      const searchLanguages = [
-        preferredLanguage,
-        ...NEWS_LANGUAGES.map((lang) => lang.id).filter((id) => id !== preferredLanguage),
-      ];
+    let cancelled = false;
 
-      for (const lang of searchLanguages) {
-        for (let page = 1; page <= 5; page++) {
-          const result = await fetchNews({ page, limit: 20, language: lang }).unwrap();
-          const found = result.data.find((a) => a.article_id === articleId);
-          if (found) {
-            cacheArticle(found);
-            navigate(`/article/${articleId}`, { replace: true, state: { article: found } });
-            return;
-          }
-          if (page >= result.pagination.totalPages) break;
+    const resolveArticle = async () => {
+      setLoadStatus("loading");
+      setErrorMessage(null);
+
+      // A. Router state from in-app navigation
+      if (stateArticle && stateArticle.article_id === articleId) {
+        cacheArticle(stateArticle);
+        if (!cancelled) {
+          setArticle(stateArticle);
+          setLoadStatus("ready");
         }
+        return;
+      }
+
+      // B. sessionStorage cache
+      const cached = getCachedArticle(articleId);
+      if (cached) {
+        if (!cancelled) {
+          setArticle(cached);
+          setLoadStatus("ready");
+        }
+        return;
+      }
+
+      // C. Public get-by-id endpoint
+      try {
+        const byId = await fetchNewsById(articleId).unwrap();
+        if (cancelled) return;
+        cacheArticle(byId);
+        setArticle(byId);
+        setLoadStatus("ready");
+        navigate(`/article/${articleId}`, { replace: true, state: { article: byId } });
+        return;
+      } catch {
+        // Continue to legacy list scan (backend may still gate by-id on audio)
+      }
+
+      // Legacy fallback: scan recent list pages so cold loads keep working
+      try {
+        const searchLanguages = [
+          preferredLanguage,
+          ...NEWS_LANGUAGES.map((lang) => lang.id).filter((id) => id !== preferredLanguage),
+        ];
+
+        for (const lang of searchLanguages) {
+          for (let page = 1; page <= 5; page++) {
+            const result = await fetchNews({ page, limit: 20, language: lang }).unwrap();
+            if (cancelled) return;
+            const found = result.data.find((a) => a.article_id === articleId);
+            if (found) {
+              cacheArticle(found);
+              setArticle(found);
+              setLoadStatus("ready");
+              navigate(`/article/${articleId}`, { replace: true, state: { article: found } });
+              return;
+            }
+            if (page >= result.pagination.totalPages) break;
+          }
+        }
+
+        if (!cancelled) {
+          setArticle(null);
+          setLoadStatus("not_found");
+        }
+      } catch (err) {
+        if (cancelled) return;
+        setArticle(null);
+        setLoadStatus("error");
+        setErrorMessage(err instanceof Error ? err.message : "Failed to load article");
       }
     };
 
-    findArticle();
-  }, [articleId, initialArticle, fetchNews, navigate, preferredLanguage]);
+    void resolveArticle();
 
-  const article = initialArticle;
+    return () => {
+      cancelled = true;
+    };
+  }, [articleId, stateArticle, fetchNewsById, fetchNews, navigate, preferredLanguage]);
+
   const bodyText = stripHtml(article?.content || article?.description || "");
   const summary = article ? getArticleSummary(article, 280) : "";
 
@@ -83,13 +153,45 @@ const NewsDetail = () => {
     }
   };
 
-  if (!article) {
+  if (loadStatus === "loading") {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 pt-28">
         <Loader2 className="h-10 w-10 animate-spin text-primary" />
-        <p className="mt-4 text-sm text-muted-foreground">
-          {isSearching ? "Finding article…" : "Loading…"}
+        <p className="mt-4 text-sm text-muted-foreground">Loading article…</p>
+      </div>
+    );
+  }
+
+  if (loadStatus === "not_found" || !article) {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 pt-28 text-center">
+        <h1 className="text-2xl font-bold text-foreground">Article not found</h1>
+        <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          This story may have been removed or the link is no longer valid.
         </p>
+        <Button asChild variant="outline" className="mt-6 border-border">
+          <Link to="/#news">
+            <ArrowLeft className="mr-1.5 h-4 w-4" />
+            Back to news
+          </Link>
+        </Button>
+      </div>
+    );
+  }
+
+  if (loadStatus === "error") {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 pt-28 text-center">
+        <h1 className="text-2xl font-bold text-foreground">Unable to load article</h1>
+        <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          {errorMessage || "Something went wrong while fetching this story. Please try again."}
+        </p>
+        <Button asChild variant="outline" className="mt-6 border-border">
+          <Link to="/#news">
+            <ArrowLeft className="mr-1.5 h-4 w-4" />
+            Back to news
+          </Link>
+        </Button>
       </div>
     );
   }
@@ -102,16 +204,13 @@ const NewsDetail = () => {
         </div>
 
         <div className="flex gap-8">
-          <div className="min-w-0 flex-1 max-w-4xl mx-auto xl:mx-0">
+          <div className="min-w-0 mx-auto max-w-4xl flex-1 xl:mx-0">
             <div className="mb-6 flex flex-wrap items-center gap-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate("/#news")}
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <ArrowLeft className="mr-1.5 h-4 w-4" />
-                Back to news
+              <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                <Link to="/#news">
+                  <ArrowLeft className="mr-1.5 h-4 w-4" />
+                  Back to news
+                </Link>
               </Button>
               <Button variant="outline" size="sm" onClick={handleShare} className="border-border">
                 <Share2 className="mr-1.5 h-3.5 w-3.5" />
@@ -202,17 +301,13 @@ const NewsDetail = () => {
                       key={item.article_id}
                       article={item}
                       variant="horizontal"
-                      onClick={(a) => {
-                        cacheArticle(a);
-                        navigate(`/article/${a.article_id}`, { state: { article: a } });
-                      }}
+                      onNavigate={(a) => cacheArticle(a)}
                     />
                   ))}
                 </div>
               </div>
             )}
           </div>
-
         </div>
       </div>
     </article>
