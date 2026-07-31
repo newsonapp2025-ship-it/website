@@ -1,11 +1,15 @@
-# SPA deep-link rewrites are configured in Amplify Console (NOT in this buildspec).
+# SPA deep links: configure in Amplify Console → Hosting → Rewrites and redirects.
 #
-# CRITICAL: Do NOT use Source "/<*>" → "/index.html" (200).
-# That rewrites JS/CSS/images to HTML and breaks the site with:
-#   "Failed to load module script... MIME type of text/html"
+# BROKEN (do not use):
+#   Source: /<*>   Target: /index.html   Type: 200 (Rewrite)
+#   → serves HTML for .js/.css and causes MIME errors.
 #
-# Use the rule in amplify-redirects.json instead (regex that excludes .js/.css/.png/...).
-# Amplify Console → Hosting → Rewrites and redirects → Open text editor → paste JSON → Save.
+# CORRECT (use this — also in amplify-redirects.json):
+#   Source: /<*>   Target: /index.html   Type: 404-200
+#   → only rewrites when the file is missing; real JS/CSS/images are served normally.
+#
+# Console steps: Rewrites and redirects → Open text editor → replace ALL rules with
+# amplify-redirects.json → Save. No redeploy required; hard-refresh the site after.
 #
 version: 1
 frontend:
