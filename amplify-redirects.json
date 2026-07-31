@@ -1,1 +1,8 @@
-[{"condition":null,"source":"</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|ttf|map|json|webp|html)$)([^.]+$)/>","status":"200","target":"/index.html"}]
+[
+  {
+    "source": "</^[^.]+$|\\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|ttf|map|json|webp|html|xml)$)([^.]+$)/>",
+    "status": "200",
+    "target": "/index.html",
+    "condition": null
+  }
+]

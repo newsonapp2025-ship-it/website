@@ -1,6 +1,12 @@
-# SPA deep-link rewrites are NOT part of the Amplify buildspec.
-# Import amplify-redirects.json in Amplify Console → Hosting → Rewrites and redirects
-# (200 rewrite to /index.html) so /about, /article/*, etc. do not return hosting 404.
+# SPA deep-link rewrites are configured in Amplify Console (NOT in this buildspec).
+#
+# CRITICAL: Do NOT use Source "/<*>" → "/index.html" (200).
+# That rewrites JS/CSS/images to HTML and breaks the site with:
+#   "Failed to load module script... MIME type of text/html"
+#
+# Use the rule in amplify-redirects.json instead (regex that excludes .js/.css/.png/...).
+# Amplify Console → Hosting → Rewrites and redirects → Open text editor → paste JSON → Save.
+#
 version: 1
 frontend:
   phases:
