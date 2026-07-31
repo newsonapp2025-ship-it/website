@@ -12,15 +12,15 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email Us",
-    detail: "newson2025@gmail.com",
+    detail: "info@pixindia.com",
     subtitle: "We'll respond within 24 hours",
   },
-  {
-    icon: Phone,
-    title: "Call Us",
-    detail: "99442 77553",
-    subtitle: "Mon–Fri, 9am–6pm IST",
-  },
+  // {
+  //   icon: Phone,
+  //   title: "Call Us",
+  //   detail: "99442 77553",
+  //   subtitle: "Mon–Fri, 9am–6pm IST",
+  // },
   {
     icon: MapPin,
     title: "Visit Us",

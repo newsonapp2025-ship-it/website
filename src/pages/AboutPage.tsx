@@ -83,13 +83,13 @@ const AboutPage = () => {
           </li>
           <li>
             <strong>General inquiries:</strong>{" "}
-            <a href="mailto:newson2025@gmail.com" className="text-primary hover:underline">
-              newson2025@gmail.com
+            <a href="mailto:info@pixindia.com" className="text-primary hover:underline">
+              info@pixindia.com
             </a>
           </li>
-          <li>
+          {/* <li>
             <strong>Phone:</strong> +91 99442 77553
-          </li>
+          </li> */}
           <li>
             <strong>Address:</strong> 513 Shamims Tower, 1st Floor, Thadagam Main Rd, RS
             Puram West, Coimbatore, Tamil Nadu 641002, India
